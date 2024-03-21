@@ -1,6 +1,7 @@
 const NavBar = ({}) => {
     return <div>
       <nav className="p-3 bg-[#0A1436]" >
+      
           <div className=" flex flex-row justify-between items-center">
             <div>
               <h1 className="m-2 text-3xl font-bold">FreeProjects.com</h1>
