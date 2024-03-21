@@ -10,7 +10,7 @@ const Page: NextPage<Props> = ({}) => {
     <div className="flex-1 p-3 bg-[#0A1436]">
       <NavBar/>
       <LoginSignUp/>
-      <FunctionCard/>
+            <FunctionCard/>
     </div>
   );
 };
