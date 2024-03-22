@@ -1,4 +1,8 @@
-const NavBar = ({}) => {
+const NavBar = ({setLoginSignup, setType}) => {
+  const handleLoginSignup = (type) => {
+    setType(type);
+    setLoginSignup(true);
+  }
     return <div>
       <nav className="p-3 bg-[#0A1436]" >
       
@@ -22,10 +26,10 @@ const NavBar = ({}) => {
             </div>
   
             <div className="flex-row justify-center items-center h-[100%]">
-              <button className="p-2 w-20 border-2 border-white rounded-2xl m-2">
+              <button onClick={() => handleLoginSignup("login")} className="p-2 w-20 border-2 border-white rounded-2xl m-2">
                 Login
               </button>
-              <button className="p-2 w-20 border-2 border-white rounded-2xl m-2">
+              <button onClick={() => handleLoginSignup("signup")} className="p-2 w-20 border-2 border-white rounded-2xl m-2">
                 Sign up
               </button>
             </div>
