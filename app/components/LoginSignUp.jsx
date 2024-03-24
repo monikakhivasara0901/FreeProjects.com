@@ -27,7 +27,7 @@ const LoginSignUp = ({ type, setType, setLoginSignup }) => {
       })
         .then((response) => response.json())
         .then((data) => {
-            console.log("responce",data);
+            console.log("response",data);
             if(data.success){
               setLoginSignup(false)
             }else{
