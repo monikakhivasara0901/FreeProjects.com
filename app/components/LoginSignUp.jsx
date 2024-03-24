@@ -66,7 +66,7 @@ const LoginSignUp = ({ type, setType, setLoginSignup }) => {
   };
 
   return (
-    <div className="absolute flex-1 w-[100vw] h-[100vh] p-3 bg-[#03050c]">
+    <div className="flex w-[100vw] h-[100vh] justify-center items-center bg-[#03050c]">
       <form
       onSubmit={handleLoginSignUpSubmit}
       className="flex items-center justify-center absolute left-[40%]"
