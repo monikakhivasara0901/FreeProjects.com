@@ -1,4 +1,4 @@
-import ProjectDetailCard from "./ProjectDetailCard"
+import ProjectDetailCard from "@/app/components/projectComponents/ProjectDetailCard";
 
 
 const ProjectViewContainer = ({}) => {
@@ -13,7 +13,10 @@ const ProjectViewContainer = ({}) => {
         <div className="flex ml-1 flex-end w-20"><h3 className="mr-1">300</h3> Items</div>
     
       </div>
-        <div className="flex-1 whitespace-nowrap overflow-auto scrollbar-hide p-1">
+        <div className="flex-none h-[100%] w-[100%] whitespace-nowrap overflow-auto scrollbar-hide p-1 bg-slate-700">
+        <ProjectDetailCard/>
+        <ProjectDetailCard/>
+        <ProjectDetailCard/>
         <ProjectDetailCard/>
     </div>
     </div>
