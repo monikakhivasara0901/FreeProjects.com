@@ -1,9 +1,9 @@
 "use client";
 import { NextPage } from "next";
-import NavBar from "../components/NavBar";
-import ProjectTopContainer from "../components/ProjectTopContainer";
-import FilterBox from "../components/FilterBox";
-import ProjectViewContainer from "../components/ProjectViewContainer";
+import NavBar from "@/app/components/NavBar";
+import ProjectTopContainer from "@/app/components/projectComponents/ProjectTopContainer";
+import FilterBox from "@/app/components/projectComponents/FilterBox";
+import ProjectViewContainer from "@/app/components/projectComponents/ProjectViewContainer";
 import { useState } from "react";
 
 interface Props {}

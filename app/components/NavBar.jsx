@@ -10,7 +10,7 @@ const NavBar = ({setLoginSignup, setType}) => {
             <div>
               <h1 className="m-2 text-3xl font-bold">FreeProjects.com</h1>
               <div className="flex-row">
-                <a className="m-2" href="/home">
+                <a className="m-2" href="/">
                   Home
                 </a>
                 <a className="m-2" href="/projects">

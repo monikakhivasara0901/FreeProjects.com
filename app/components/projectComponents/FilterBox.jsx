@@ -1,5 +1,5 @@
 'use client'
-import DropdownMenu from "../components/DropdownMenu"
+import DropdownMenu from "@/app/components/projectComponents/DropdownMenu";
 
 const FilterBox = ({}) => {
   let technologies = [
