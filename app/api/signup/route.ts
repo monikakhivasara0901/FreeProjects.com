@@ -5,10 +5,11 @@ var bcryptjs = require('bcryptjs');
 import { sendEmail } from "@/helpers/mailer";
 
 
-connect()
+
 
 
 export async function POST(request: NextRequest){
+    await connect()
     try {
         const reqBody = await request.json()
         const {fullname ,username, email, password} = reqBody
@@ -26,6 +27,7 @@ export async function POST(request: NextRequest){
         const hashedPassword = await bcryptjs.hash(password, salt)
 
         const newUser = new User({
+            fullname,
             username,
             email,
             password: hashedPassword

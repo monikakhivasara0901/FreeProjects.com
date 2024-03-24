@@ -30,8 +30,6 @@ const LoginSignUp = ({ type, setType, setLoginSignup }) => {
             console.log("response",data);
             if(data.success){
               setLoginSignup(false)
-            }else{
-              alert("Invalid Username or Password")
             }
         })
         .catch((error) => {
@@ -54,8 +52,6 @@ const LoginSignUp = ({ type, setType, setLoginSignup }) => {
           console.log("responce",data);
           if(data.success){
             setLoginSignup(false)
-          }else{
-            alert("Invalid Username or Password")
           }
         })
         .catch((error) => {
