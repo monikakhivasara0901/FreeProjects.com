@@ -1,43 +1,76 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import Project from '../../models/ProjectInfoSchema'; // Assuming you have a Mongoose model for projects
+import { NextRequest, NextResponse } from "next/server";
+import connectMongoDB from "@/libs/mongodb";
+import mongoose from "mongoose";
+const { MongoClient } = require("mongodb");
 
-interface Filters {
-  stackUsed?: string[];
-  universityOrCollegeName?: string;
-  status?: string;
-  // Add other filter properties as needed
-}
+const uri = process.env.MONGODB_URI;
+const client = new MongoClient(uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === 'POST') {
-    const filters: Filters = req.body;
+export async function POST(request: NextRequest) {
+  try {
+    console.log("Called");
 
-    try {
-      // Construct the MongoDB query based on the provided filters
-      const query: any = {}; // Define query as any type for now
+    const body = await request.json();
+    console.log("Request Body:", body);
 
-      if (filters.stackUsed && filters.stackUsed.length > 0) {
-        query.stackUsed = { $in: filters.stackUsed };
+    // Extract the technologies from the request body, or use a dummy array if not provided
+    const technologyArray = body.technologies || ['Dummy Technology 1', 'Dummy Technology 2'];
+
+    // Connect to the MongoDB Atlas cluster
+    await client.connect();
+
+    // Access the projects collection
+    const collection = client.db("YourDatabaseName").collection("projects");
+
+    // Find all documents in the collection
+    const cursor = collection.find();
+
+    // Array to store documents with matching score
+    const matchedProjects = [];
+    const unmatchedProjects = [];
+
+    // Iterate over the cursor and process each document
+    await cursor.forEach((document) => {
+      // Process each document here
+      const projectTechnologies = document.technologies;
+
+      // Check if the project includes any of the requested technologies
+      const matchedTechnologyCount = projectTechnologies.filter(tech => technologyArray.includes(tech)).length;
+
+      // Calculate the score as a percentage
+      const totalTechnologies = technologyArray.length;
+      const scorePercentage = (matchedTechnologyCount / totalTechnologies) * 100;
+
+      if (matchedTechnologyCount > 0) {
+        matchedProjects.push({ document, scorePercentage });
+      } else {
+        unmatchedProjects.push({ document, scorePercentage });
       }
+    });
 
-      if (filters.universityOrCollegeName) {
-        query.universityOrCollegeName = filters.universityOrCollegeName;
-      }
+    // Sort the arrays based on the matching score in descending order
+    matchedProjects.sort((a, b) => b.scorePercentage - a.scorePercentage);
+    unmatchedProjects.sort((a, b) => b.scorePercentage - a.scorePercentage);
 
-      if (filters.status) {
-        query.status = filters.status;
-      }
+    console.log(matchedProjects);
+    console.log(unmatchedProjects);
 
-      // Query the database to find projects that match the specified filters
-      const projects = await Project.find(query);
-
-      // Return the search results
-      res.status(200).json({ projects });
-    } catch (error) {
-      console.error('Error searching projects:', error);
-      res.status(500).json({ error: 'Internal server error. Please try again later.' });
-    }
-  } else {
-    res.status(405).json({ error: 'Method Not Allowed' });
+    return NextResponse.json({
+      status: 200,
+      matchedProjects: matchedProjects,
+      unmatchedProjects: unmatchedProjects,
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    return NextResponse.json({
+      status: 500,
+      error: "Internal server error. Please try again later.",
+    });
+  } finally {
+    // Close the MongoDB connection
+    await client.close();
   }
 }
