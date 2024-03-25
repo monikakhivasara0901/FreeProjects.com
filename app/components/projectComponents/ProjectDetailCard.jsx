@@ -5,9 +5,15 @@ import Image3 from "@/public/images/image3.jpeg";
 import Image from "next/image";
 import leftArrow from "@/public/icons/left-arrow.png";
 import rightArrow from "@/public/icons/right-arrow.png";
+import heart from "@/public/icons/heart.png";
+import heartFill from "@/public/icons/heart-fill.png";
+import github from "@/public/icons/github.png";
+import linkedin from "@/public/icons/linkedin.png";
+import StarRatingComponent from "react-star-rating-component";
 
 const ProjectDetailCard = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [liked, setLiked] = useState(false);
 
   const images = [
     { src: Image1, alt: "Image1", color: "bg-orange-500" },
@@ -26,7 +32,7 @@ const ProjectDetailCard = () => {
   };
 
   return (
-    <div className="flex flex-wrap items-center justify-between border-2 ml-3 mt-3 h-56 w-[98%]">
+    <div className="flex flex-wrap items-center justify-between border-2 ml-3 mt-3 h-56 w-[98%] hover:shadow-2xl hover:bg-gray-600 hover: z-50">
       <div className="flex flex-none h-[95%] w-[35%] ml-1 items-center relative">
         <div className="flex-1 h-[100%] overflow-auto scrollbar-hide">
           {images.map((image, index) => (
@@ -39,7 +45,6 @@ const ProjectDetailCard = () => {
                 display: index === currentImageIndex ? "block" : "none",
               }}
             />
-            
           ))}
           <button
             className="absolute top-1/2 transform -translate-y-1/2 left-1"
@@ -50,7 +55,7 @@ const ProjectDetailCard = () => {
           </button>
           <button
             className="absolute top-1/2 transform -translate-y-1/2 right-1"
-            style={{ filter: "invert(100%)" }}                                                            
+            style={{ filter: "invert(100%)" }}
             onClick={showNextImage}
           >
             <Image src={rightArrow} alt="" className="w-[20px] h-[25px]" />
@@ -58,16 +63,88 @@ const ProjectDetailCard = () => {
         </div>
       </div>
 
-      <div className="flex-1 border-r-2 p-2 h-[100%] w-[40%] mx-1 items-center justify-center">
-        <h1 className="font-bold text-xl mb-2">Project Name</h1>
-        <p className="text-wrap text-sm">
+      <div className="flex-1 border-r-2 p-2 h-[100%] w-[40%] mx-1 items-center justify-around">
+        <h1 className="font-bold text-xl m-1">Project Name</h1>
+        <h1 className="font-bold text-sm m-1">University Name</h1>
+        <p className="text-wrap text-sm m-1 mb-2 h-[40%]">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam
           doloribus dignissimos aperiam aliquam eaque, possimus nam rem harum
           libero esse?
         </p>
+        {/* tachnologies used */}
+        <div className="flex flex-col justify-start items-start">
+          <h1 className="font-bold text-sm">Technologies Used</h1>
+          <div className="flex flex-row justify-start items-center flex-wrap">
+            <h1 className="text-xs mr-2">HTML</h1>
+            <h1 className="text-xs mr-2">CSS</h1>
+            <h1 className="text-xs mr-2">JavaScript</h1>
+            <h1 className="text-xs mr-2">ReactJS</h1>
+            <h1 className="text-xs mr-2">NodeJS</h1>
+            <h1 className="text-xs mr-2">MongoDB</h1>
+            <h1 className="text-xs mr-2">ExpressJS</h1>
+            <h1 className="text-xs mr-2">NextJS</h1>
+            <h1 className="text-xs mr-2">TailwindCSS</h1>
+          </div>
+        </div>
       </div>
-      <div className="flex-none h-[100%] w-[25%] mx-1">
-        <h1>Rating</h1>
+      <div className="flex flex-col justify-between items-center flex-none h-[100%] w-[25%] mx-1">
+        <div className="flex flex-row justify-between items-center w-[100%] mb-1">
+          <div  className="flex flex-col justify-betwee items-center m-1" >
+            <h1 className="text-sm m-1">
+              Likes<span> : 0</span>
+            </h1>
+            <h1 className="text-sm m-1">
+              Views<span> : 0</span>
+            </h1>
+            <StarRatingComponent className="ml-1" name="rate1" starCount={5} value={4} />
+          </div>
+          <div className="flex flex-col justify-betwee items-center m-1">
+            <button className="h-5 w-5 m-1" onClick={() => setLiked(!liked)}>
+              {liked ? (
+                <Image
+                  src={heartFill}
+                  alt="heart"
+                  className="w-[20px] h-[20px]"
+                  style={{ filter: "invert(100%)" }}
+                />
+              ) : (
+                <Image
+                  src={heart}
+                  alt="heart"
+                  className="w-[20px] h-[20px]"
+                  style={{ filter: "invert(100%)" }}
+                />
+              )}
+            </button>
+            <button className="h-5 w-5 m-1">
+              <Image
+                src={linkedin}
+                alt="linkedin"
+                className="w-[20px] h-[20px]"
+                style={{ filter: "invert(100%)" }}
+              />
+            </button>
+            <button className="h-5 w-5 m-1">
+              <Image
+                src={github}
+                alt="github"
+                className="w-[20px] h-[20px]"
+                style={{ filter: "invert(100%)" }}
+              />
+            </button>
+          </div>
+        </div>
+        <div>
+          <h1>Status : Live/Completed/Ongoing</h1>
+        </div>
+        <div className="flex flex-col justify-center items-center w-[90%] mb-1">
+          <button className="w-[100%] h-8 m-1  border-2  border-white rounded-xl">
+            Explore Details
+          </button>
+          <button className="w-[100%] h-8 m-1 border-2  border-white rounded-xl">
+            Live Project
+          </button>
+        </div>
       </div>
     </div>
   );

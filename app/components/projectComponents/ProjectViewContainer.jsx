@@ -13,7 +13,7 @@ const ProjectViewContainer = ({}) => {
         <div className="flex ml-1 flex-end w-20"><h3 className="mr-1">300</h3> Items</div>
     
       </div>
-        <div className="flex-none h-[100%] w-[100%] whitespace-nowrap overflow-auto scrollbar-hide p-1 bg-slate-700">
+        <div className="flex-none h-[95%] w-[100%] whitespace-nowrap overflow-auto scrollbar-hide p-1 bg-slate-700">
         <ProjectDetailCard/>
         <ProjectDetailCard/>
         <ProjectDetailCard/>
