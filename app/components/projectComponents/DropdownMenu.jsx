@@ -6,6 +6,11 @@ import Image from "next/image";
 const DropdownMenu = ({ title, data }) => {
   const [isOpen, setIsOpen] = useState(false);
 
+  const handleCheckboxChange = (item) => {
+    document.getElementById(`${title}_${item}`).checked =
+      !document.getElementById(`${title}_${item}`).checked;
+  };
+
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
@@ -31,10 +36,7 @@ const DropdownMenu = ({ title, data }) => {
         <ul className="p-3 pt-1">
           {data.map((item) => (
             <button
-              onClick={() => {
-                document.getElementById(`${title}_${item}`).checked =
-                  !document.getElementById(`${title}_${item}`).checked;
-              }}
+              onClick={() => handleCheckboxChange(item)}
               className="w-[100%] flex flex-row items-center"
             >
               <input
@@ -42,6 +44,7 @@ const DropdownMenu = ({ title, data }) => {
                 id={`${title}_${item}`}
                 name={item}
                 value={item}
+                onChange={() => handleCheckboxChange(item)}
               />
               <li className="ml-2">{item}</li>
             </button>
