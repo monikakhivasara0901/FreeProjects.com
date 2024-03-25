@@ -1,36 +1,78 @@
+// import mongoose from "mongoose";
+
+// const userSchema = new mongoose.Schema({
+//    fullname: {
+//       type: String,
+//       required: [true,"Please provide a your fullname"],
+//    },
+//    username: {
+//       type: String,
+//       required: [true,"Please provide a username"],
+//       unique: true
+//    },
+//    email:{
+//       type: String,
+//       required: [true,"Please provide an email"],
+//       unique: true
+//    },
+//    password:{
+//       type: String,
+//       required: [true,"Please provide a password"],
+//    },
+//    isVerified:{
+//       type: Boolean,
+//       default: false
+//    },
+//    forgotPasswordToken:String,
+//    forgotPasswordExpiry:Date,
+//    verifyToken:String,
+//    verifyTokenExpiry:Date,
+// });
+
+// // if database is alraedy created
+// const User = mongoose.models.users || mongoose.model
+// ("users", userSchema);
+
+// export default User;
+
+
+// userModel.js
+
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
    fullname: {
       type: String,
-      required: [true,"Please provide a your fullname"],
+      required: [true, "Please provide your fullname"],
    },
    username: {
       type: String,
-      required: [true,"Please provide a username"],
+      required: [true, "Please provide a username"],
       unique: true
    },
-   email:{
+   email: {
       type: String,
-      required: [true,"Please provide an email"],
+      required: [true, "Please provide an email"],
       unique: true
    },
-   password:{
+   password: {
       type: String,
-      required: [true,"Please provide a password"],
+      required: [true, "Please provide a password"],
    },
-   isVerified:{
+   isVerified: {
       type: Boolean,
       default: false
    },
-   forgotPasswordToken:String,
-   forgotPasswordExpiry:Date,
-   verifyToken:String,
-   verifyTokenExpiry:Date,
+   forgotPasswordToken: String,
+   forgotPasswordExpiry: Date,
+   verifyToken: String,
+   verifyTokenExpiry: Date,
+   userProfile: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'UserProfile' // Reference to the UserProfile model
+   }
 });
 
-// if database is alraedy created
-const User = mongoose.models.users || mongoose.model
-("users", userSchema);
+const User = mongoose.models.users || mongoose.model("users", userSchema);
 
 export default User;
