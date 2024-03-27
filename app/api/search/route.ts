@@ -1,25 +1,23 @@
 import { NextRequest, NextResponse } from "next/server";
-import connectMongoDB from "@/libs/mongodb";
+import {connect} from "@/dbConfig/dbConfig";
 import mongoose from "mongoose";
 const { MongoClient } = require("mongodb");
 
-const uri = process.env.MONGODB_URI;
+const uri = "mongodb+srv://admin123:admin123@cluster0.psewfip.mongodb.net/FreeProjectsDb"
 const client = new MongoClient(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 
 export async function POST(request: NextRequest) {
+  console.log("Called");
   try {
-    console.log("Called");
 
     const body = await request.json();
     console.log("Request Body:", body);
 
-    // Extract the technologies from the request body, or use a dummy array if not provided
-    const technologyArray = body.technologies || ['Dummy Technology 1', 'Dummy Technology 2'];
-
-    // Connect to the MongoDB Atlas cluster
+    const technologyArray = body.technologies || ['HTML', 'CSS', 'JavaScript'];
+    
     await client.connect();
 
     // Access the projects collection
@@ -29,40 +27,38 @@ export async function POST(request: NextRequest) {
     const cursor = collection.find();
 
     // Array to store documents with matching score
-    const matchedProjects = [];
-    const unmatchedProjects = [];
+    let matchedProjects:any = [];
 
     // Iterate over the cursor and process each document
-    await cursor.forEach((document) => {
+    await cursor.forEach((document:any) => {
       // Process each document here
-      const projectTechnologies = document.technologies;
+      const stackUsed = document.technologies;
+      const universityOrCollegeName = document.universityOrCollegeName;
+
+      const finalArray = stackUsed.concat(universityOrCollegeName);
 
       // Check if the project includes any of the requested technologies
-      const matchedTechnologyCount = projectTechnologies.filter(tech => technologyArray.includes(tech)).length;
+      const matchedTechnologyCount = finalArray.filter((tech:any) => technologyArray.includes(tech)).length;
 
       // Calculate the score as a percentage
       const totalTechnologies = technologyArray.length;
       const scorePercentage = (matchedTechnologyCount / totalTechnologies) * 100;
 
-      if (matchedTechnologyCount > 0) {
+     
         matchedProjects.push({ document, scorePercentage });
-      } else {
-        unmatchedProjects.push({ document, scorePercentage });
-      }
+       
     });
 
     // Sort the arrays based on the matching score in descending order
     matchedProjects.sort((a, b) => b.scorePercentage - a.scorePercentage);
-    unmatchedProjects.sort((a, b) => b.scorePercentage - a.scorePercentage);
 
     console.log(matchedProjects);
-    console.log(unmatchedProjects);
 
     return NextResponse.json({
       status: 200,
       matchedProjects: matchedProjects,
-      unmatchedProjects: unmatchedProjects,
     });
+
   } catch (error) {
     console.error("Error:", error);
     return NextResponse.json({

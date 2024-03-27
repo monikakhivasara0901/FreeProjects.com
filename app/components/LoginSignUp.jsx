@@ -14,7 +14,8 @@ const LoginSignUp = ({ type, setLoginSignup }) => {
     event.preventDefault();
     if (signup) {
       console.log("signup");
-      if (password == conformpassword) {
+      if (password == conformpassword && password.length > 3) {
+
         console.log("password match");
         fetch("http://localhost:3000/api/signup/", {
           method: "POST",
@@ -61,7 +62,7 @@ const LoginSignUp = ({ type, setLoginSignup }) => {
           if (data.success) {
             setLoginSignup(false);
           }else{
-            
+            alert(data.message)
           }
         })
         .catch((error) => {

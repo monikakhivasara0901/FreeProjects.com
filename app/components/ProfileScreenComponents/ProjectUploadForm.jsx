@@ -50,11 +50,11 @@ const ProjectUploadForm = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md">
-      <h2 className="text-3xl font-semibold text-center text-blue-800 mb-6">Upload Your Project</h2>
+    <div className="w-[100%] mx-auto bg-slate-700 p-8 rounded-lg shadow-md">
+      <h2 className="text-3xl text-white font-semibold text-cente mb-6">Upload Your Project</h2>
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
-          <label htmlFor="title" className="block text-sm font-medium text-gray-700">Title:</label>
+          <label htmlFor="title" className="block text-sm font-medium text-white">Title:</label>
           <input 
             type="text" 
             id="title" 
@@ -68,7 +68,7 @@ const ProjectUploadForm = () => {
           />
         </div>
         <div>
-          <label htmlFor="teamMembers" className="block text-sm font-medium text-gray-700">Number of Team Members:</label>
+          <label htmlFor="teamMembers" className="block text-sm font-medium text-white">Number of Team Members:</label>
           <input 
             type="number" 
             id="teamMembers" 
@@ -82,7 +82,7 @@ const ProjectUploadForm = () => {
           />
         </div>
         <div>
-          <label htmlFor="teamMemberNames" className="block text-sm font-medium text-gray-700">Names of Team Members:</label>
+          <label htmlFor="teamMemberNames" className="block text-sm font-medium text-white">Names of Team Members:</label>
           <input 
             type="text" 
             id="teamMemberNames" 
@@ -96,7 +96,7 @@ const ProjectUploadForm = () => {
           />
         </div>
         <div>
-          <label htmlFor="teamMemberEmails" className="block text-sm font-medium text-gray-700">Emails of Team Members:</label>
+          <label htmlFor="teamMemberEmails" className="block text-sm font-medium text-white">Emails of Team Members:</label>
           <input 
             type="email" 
             id="teamMemberEmails" 
@@ -110,7 +110,7 @@ const ProjectUploadForm = () => {
           />
         </div>
         <div>
-          <label htmlFor="techStacks" className="block text-sm font-medium text-gray-700">Tech Stacks:</label>
+          <label htmlFor="techStacks" className="block text-sm font-medium text-white">Tech Stacks:</label>
           <select 
             id="techStacks" 
             name="techStacks" 
@@ -128,7 +128,7 @@ const ProjectUploadForm = () => {
           {/* Add more tech stacks similarly */}
         </div>
         <div>
-          <label htmlFor="otherTechStack" className="block text-sm font-medium text-gray-700">Other Tech Stack:</label>
+          <label htmlFor="otherTechStack" className="block text-sm font-medium text-white">Other Tech Stack:</label>
           <input 
             type="text" 
             id="otherTechStack" 
@@ -141,7 +141,7 @@ const ProjectUploadForm = () => {
           />
         </div>
         <div>
-          <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description:</label>
+          <label htmlFor="description" className="block text-sm font-medium text-white">Description:</label>
           <textarea 
             id="description" 
             name="description" 
@@ -154,7 +154,7 @@ const ProjectUploadForm = () => {
           ></textarea>
         </div>
         <div>
-          <label htmlFor="university" className="block text-sm font-medium text-gray-700">University:</label>
+          <label htmlFor="university" className="block text-sm font-medium text-white">University:</label>
           <input 
             type="text" 
             id="university" 
@@ -168,7 +168,7 @@ const ProjectUploadForm = () => {
           />
         </div>
         <div>
-          <label htmlFor="githubLink"  className="block text-sm font-medium text-gray-700">GitHub Link:</label>
+          <label htmlFor="githubLink"  className="block text-sm font-medium text-white">GitHub Link:</label>
           <input 
             type="text" 
             id="githubLink" 
@@ -182,7 +182,7 @@ const ProjectUploadForm = () => {
           />
         </div>
         <div>
-          <label htmlFor="file" className="block text-sm font-medium text-gray-700">Project File:</label>
+          <label htmlFor="file" className="block text-sm font-medium text-white">Project File:</label>
           <input 
             type="file" 
             id="file" 
