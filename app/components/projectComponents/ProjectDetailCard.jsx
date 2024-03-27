@@ -32,7 +32,7 @@ const ProjectDetailCard = () => {
   };
 
   return (
-    <div className="flex flex-wrap items-center justify-between border-2 ml-3 mt-3 h-56 w-[98%] hover:shadow-2xl hover:bg-gray-600 hover: z-50">
+    <div className="flex flex-wrap items-center justify-between border-2 ml-3 mt-3 h-60 w-[98%] hover:shadow-2xl hover:bg-gray-600 hover: z-50">
       <div className="flex flex-none h-[95%] w-[35%] ml-1 items-center relative">
         <div className="flex-1 h-[100%] overflow-auto scrollbar-hide">
           {images.map((image, index) => (
