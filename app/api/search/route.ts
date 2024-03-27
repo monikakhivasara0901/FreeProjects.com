@@ -16,12 +16,8 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     console.log("Request Body:", body);
 
-    // Extract the technologies from the request body, or use a dummy array if not provided
     const technologyArray = body.technologies || ['HTML', 'CSS', 'JavaScript'];
-
-    console.log("Technology Array:", technologyArray);
-
-    // Connect to the MongoDB Atlas cluster
+    
     await client.connect();
 
     // Access the projects collection
@@ -31,15 +27,18 @@ export async function POST(request: NextRequest) {
     const cursor = collection.find();
 
     // Array to store documents with matching score
-    let matchedProjects = [];
+    let matchedProjects:any = [];
 
     // Iterate over the cursor and process each document
-    await cursor.forEach((document) => {
+    await cursor.forEach((document:any) => {
       // Process each document here
-      const projectTechnologies = document.technologies;
+      const stackUsed = document.technologies;
+      const universityOrCollegeName = document.universityOrCollegeName;
+
+      const finalArray = stackUsed.concat(universityOrCollegeName);
 
       // Check if the project includes any of the requested technologies
-      const matchedTechnologyCount = projectTechnologies.filter((tech:any) => technologyArray.includes(tech)).length;
+      const matchedTechnologyCount = finalArray.filter((tech:any) => technologyArray.includes(tech)).length;
 
       // Calculate the score as a percentage
       const totalTechnologies = technologyArray.length;
