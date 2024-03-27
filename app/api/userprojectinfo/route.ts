@@ -3,6 +3,7 @@ import { getDataFromToken } from "@/helpers/getDataFromToken";
 import {connect} from "@/dbConfig/dbConfig";
 import User from "@/models/userModel";
 import UserProfile from "@/models/profile";
+import Project from "@/models/ProjectInfoSchema";
 
 export async function GET(request: NextRequest) {
     await connect();
@@ -10,17 +11,37 @@ export async function GET(request: NextRequest) {
         const { userId } = getDataFromToken(request);
         const UserData = await User.findOne({ _id: userId });
         const UserProfileData = await UserProfile.findOne({ _id: UserData.userProfile });
-        const 
-       
+        
+        let SavedProjects =[];
+        let UplodedProjects =[];
 
-        const jobOpeningsData = await Promise.all(jobOpeningsDataPromises);
+        // SaveProjects
+        for (let i = 0; i < UserProfileData.savedProjects.length; i++) {
+            const project = await Project.findOne({ _id: UserProfileData.savedProjects[i] });
+            if (project) {
+                SavedProjects.push(project);
+            }
+        }
 
-        console.log("jobOpeningsData", jobOpeningsData);
+        // UploadedProjects
+        for (let i = 0; i < UserProfileData.UploadedProjects.length; i++) {
+            const project = await Project.findOne({ _id: UserProfileData.UploadedProjects[i] });
+            if (project) {
+                UplodedProjects.push(project);
+            }
+        }
+
+        const data = {
+            UserData: UserData,
+            UserProfileData: UserProfileData,
+            savedProjects: SavedProjects,
+            uploadedProjects: UplodedProjects
+        };
+
 
         return NextResponse.json({
             message: "Success",
             data: data,
-            jobOpeningsData: jobOpeningsData // Sending jobOpeningsData in response
         });
     } catch (error) {
         console.error(error);
