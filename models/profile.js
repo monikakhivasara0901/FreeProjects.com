@@ -39,10 +39,6 @@ const uploadedProjectSchema = new mongoose.Schema({
 
 // Schema for user profile
 const userProfileSchema = new mongoose.Schema({
-    userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User' // Reference to the User model
-    },
     username: {
         type: String,
         required: [true, "Please provide a username"],
@@ -56,7 +52,7 @@ const userProfileSchema = new mongoose.Schema({
     fullName: String,
     bio: String,
     avatarUrl: String,
-    universityOrCollege: String, // University or college name
+    universityOrCollege: String, 
     linkedIn: String,
     websiteUrl: String,
     location: String,

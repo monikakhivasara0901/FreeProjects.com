@@ -1,3 +1,341 @@
+import React, { useState } from "react";
+import axios from "axios";
+
+const ProjectUploadForm = ({setShowData}) => {
+  const [formData, setFormData] = useState({
+    projectName: "ABC",
+    teamLeaderName: "John Doe",
+    numberOfTeamMembers: 4,
+    teamMembers: [
+        { name: "Alice", email: "alice@example.com", socialMedia: { linkedIn: "https://www.linkedin.com/in/alice" } },
+        { name: "Bob", email: "bob@example.com", socialMedia: { linkedIn: "https://www.linkedin.com/in/bob" } },
+        { name: "Charlie", email: "charlie@example.com", socialMedia: { linkedIn: "https://www.linkedin.com/in/charlie" } },
+        { name: "Dave", email: "dave@example.com", socialMedia: { linkedIn: "https://www.linkedin.com/in/dave" } }
+    ],
+    universityOrCollegeName: "fsasfs",
+    stackUsed: ["HTML", "CSS", "JavaScript"],
+    description: "This project aims to develop a cutting-edge web application.",
+    tags: ["web development", "frontend", "HTML5"],
+    images: ["https://example.com/image1.jpg", "https://example.com/image2.jpg"],
+    status: "ongoing",
+    externalLinks: "fdjskflas",
+});
+
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value
+    }));
+  };
+
+  const handleTeamMembersChange = (e, index) => {
+    const { name, value } = e.target;
+    const newTeamMembers = [...formData.teamMembers];
+    newTeamMembers[index][name] = value;
+    setFormData((prevData) => ({
+      ...prevData,
+      teamMembers: newTeamMembers
+    }));
+  };
+
+  const addTeamMember = () => {
+    setFormData((prevData) => ({
+      ...prevData,
+      teamMembers: [
+        ...prevData.teamMembers,
+        { name: "", email: "", linkedIn: "" }
+      ]
+    }));
+  };
+
+  const handleImageChange = (e) => {
+    const files = Array.from(e.target.files);
+    const imageUrls = [];
+    files.forEach((file) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        imageUrls.push(reader.result);
+        if (imageUrls.length === files.length) {
+          setFormData((prevData) => ({
+            ...prevData,
+            images: [...prevData.images, ...imageUrls]
+          }));
+        }
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post("/api/uploadProject", formData);
+      console.log(response.data.success);
+      if(response.data.success){
+        setShowData(1);
+      }
+    } catch (error) {
+      console.error("Error submitting project:", error);
+    }
+  };
+
+  return (
+    <div className="container mx-auto bg-slate-700 p-8 rounded-lg shadow-md">
+      <h2 className="text-3xl text-white font-semibold text-center mb-6">
+        Upload Your Project
+      </h2>
+      <form
+        onSubmit={handleSubmit}
+        className="grid grid-cols-1 md:grid-cols-2 gap-6"
+      >
+        <div>
+          <label
+            htmlFor="projectName"
+            className="block text-sm font-medium text-white mb-1"
+          >
+            Project Name:
+          </label>
+          <input
+            type="text"
+            id="projectName"
+            name="projectName"
+            placeholder="Enter project name"
+            value={formData.projectName}
+            onChange={handleChange}
+            className="input-field w-72 h-8 text-black"
+            required
+          />
+        </div>
+        <div>
+          <label
+            htmlFor="teamLeaderName"
+            className="block text-sm font-medium text-white mb-1"
+          >
+            Team Leader Name:
+          </label>
+          <input
+            type="text"
+            id="teamLeaderName"
+            name="teamLeaderName"
+            placeholder="Enter team leader name"
+            value={formData.teamLeaderName}
+            onChange={handleChange}
+            className="input-field w-72 h-8 text-black"
+            required
+          />
+        </div>
+        <div>
+          <label
+            htmlFor="numberOfTeamMembers"
+            className="block text-sm font-medium text-white mb-1"
+          >
+            Number of Team Members:
+          </label>
+          <input
+            type="number"
+            id="numberOfTeamMembers"
+            name="numberOfTeamMembers"
+            placeholder="Enter number of team members"
+            value={formData.numberOfTeamMembers}
+            onChange={handleChange}
+            className="input-field w-72 h-8 text-black"
+            required
+          />
+        </div>
+        <div className="col-span-2 border border-gray-400 p-4 rounded-lg">
+          <h3 className="text-xl font-semibold text-white mb-2">
+            Team Members:
+          </h3>
+          {formData.teamMembers.map((member, index) => (
+            <div
+              key={index}
+              className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4"
+            >
+              <input
+                type="text"
+                placeholder="Name"
+                name="name"
+                value={member.name}
+                onChange={(e) => handleTeamMembersChange(e, index)}
+                className="input-field h-8 text-black"
+                required
+              />
+              <input
+                type="email"
+                placeholder="Email"
+                name="email"
+                value={member.email}
+                onChange={(e) => handleTeamMembersChange(e, index)}
+                className="input-field h-8 text-black"
+                required
+              />
+              <input
+                type="text"
+                placeholder="LinkedIn"
+                name="linkedIn"
+                value={member.linkedIn}
+                onChange={(e) => handleTeamMembersChange(e, index)}
+                className="input-field w-64 h-8 text-black"
+              />
+            </div>
+          ))}
+          <button
+            type="button"
+            onClick={addTeamMember}
+            className="btn-primary border border-gray-400 text-white bg-blue-500 hover:bg-blue-600"
+          >
+            Add Team Member
+          </button>
+        </div>
+        <div>
+          <label
+            htmlFor="universityOrCollegeName"
+            className="block text-sm font-medium text-white mb-1"
+          >
+            University or College Name:
+          </label>
+          <input
+            type="text"
+            id="universityOrCollegeName"
+            name="universityOrCollegeName"
+            placeholder="Enter university or college name"
+            value={formData.universityOrCollegeName}
+            onChange={handleChange}
+            className="input-field w-96 h-8 text-black"
+            required
+          />
+        </div>
+        <div>
+          <label
+            htmlFor="stackUsed"
+            className="block text-sm font-medium text-white mb-1"
+          >
+            Stack Used:
+          </label>
+          <input
+            type="text"
+            id="stackUsed"
+            name="stackUsed"
+            placeholder="Enter stack used"
+            value={formData.stackUsed}
+            onChange={handleChange}
+            className="input-field w-96 h-8 text-black"
+            required
+          />
+        </div>
+        <div>
+          <label
+            htmlFor="description"
+            className="block text-sm font-medium text-white mb-1"
+          >
+            Description:
+          </label>
+          <textarea
+            id="description"
+            name="description"
+            placeholder="Enter description"
+            value={formData.description}
+            onChange={handleChange}
+            className="input-field w-full text-black"
+            rows="4"
+            required
+          />
+        </div>
+        <div>
+          <label
+            htmlFor="tags"
+            className="block text-sm font-medium text-white mb-1"
+          >
+            Tags (comma-separated):
+          </label>
+          <input
+            type="text"
+            id="tags"
+            name="tags"
+            placeholder="Enter tags"
+            value={formData.tags.join(",")}
+            onChange={(e) => {
+              setFormData((prevData) => ({
+                ...prevData,
+                tags: e.target.value.split(",")
+              }));
+            }}
+            className="input-field w-96 h-8 text-black"
+          />
+        </div>
+        <div>
+          <label
+            htmlFor="images"
+            className="block text-sm font-medium text-white mb-1"
+          >
+            Images (select multiple):
+          </label>
+          <input
+            type="file"
+            id="images"
+            name="images"
+            accept="image/*"
+            multiple
+            onChange={handleImageChange}
+            className="input-field w-96 h-8 text-black"
+          />
+        </div>
+        <div>
+          <label
+            htmlFor="status"
+            className="block text-sm font-medium text-white mb-1"
+          >
+            Status:
+          </label>
+          <select
+            id="status"
+            name="status"
+            value={formData.status}
+            onChange={handleChange}
+            className="input-field w-72 h-8 text-black"
+          >
+            <option value="ongoing">Ongoing</option>
+            <option value="completed">Completed</option>
+            <option value="abandoned">Abandoned</option>
+          </select>
+        </div>
+        <div>
+          <label
+            htmlFor="externalLinks"
+            className="block text-sm font-medium text-white mb-1"
+          >
+            External Links:
+          </label>
+          <input
+            type="text"
+            id="externalLinks"
+            name="externalLinks"
+            placeholder="Enter external links"
+            value={formData.externalLinks}
+            onChange={handleChange}
+            className="input-field w-96 h-8 text-black"
+          />
+        </div>
+        <div className="col-span-2">
+          <button
+            type="submit"
+            className="btn-primary border border-gray-400 text-white bg-blue-500 hover:bg-blue-600 py-2 px-4 rounded-md"
+          >
+            Upload Project
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export default ProjectUploadForm;
+
+
+
+
 // import React, { useState } from "react";
 
 // const ProjectUploadForm = () => {
@@ -80,16 +418,12 @@
 //     }));
 //   };
 
-  
-
 //   const addTeamMember = () => {
 //     setFormData(prevData => ({
 //       ...prevData,
 //       teamMembers: [...prevData.teamMembers, { name: '', email: '', linkedIn: '' }],
 //     }));
 //   };
-
-  
 
 //   const handleSubmit = async (e) => {
 //     e.preventDefault();
@@ -266,7 +600,7 @@
 //             Choose Image
 //           </label>
 //         </div>
-        
+
 //         <div className="col-span-2">
 //         <div className="md:pl-6">
 //           <label
@@ -349,205 +683,3 @@
 // };
 
 // export default ProjectUploadForm;
-
-import React, { useState } from 'react';
-import axios from 'axios';
-
-const ProjectUploadForm = () => {
-  const [formData, setFormData] = useState({
-    teamLeaderName: '',
-    numberOfTeamMembers: '',
-    teamMembers: [],
-    universityOrCollegeName: '',
-    stackUsed: '',
-    description: '',
-    collaborators: [],
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prevData => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handleTeamMembersChange = (e, index) => {
-    const { name, value } = e.target;
-    const newTeamMembers = [...formData.teamMembers];
-    newTeamMembers[index][name] = value;
-    setFormData(prevData => ({
-      ...prevData,
-      teamMembers: newTeamMembers,
-    }));
-  };
-
-  
-
-  const addTeamMember = () => {
-    setFormData(prevData => ({
-      ...prevData,
-      teamMembers: [...prevData.teamMembers, { name: '', email: '', linkedIn: '' }],
-    }));
-  };
-
-  
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post('/api/projects', formData);
-      console.log(response.data);
-    } catch (error) {
-      console.error('Error submitting project:', error);
-    }
-  };
-
-  return (
-    <div className="container mx-auto bg-slate-700 p-8 rounded-lg shadow-md">
-      <h2 className="text-3xl text-white font-semibold text-center mb-6">Upload Your Project</h2>
-      <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div>
-          <label htmlFor="projectName" className="block text-sm font-medium text-white mb-1">Project Name:</label>
-          <input
-            type="text"
-            id="projectName"
-            name="projectName"
-            placeholder="Enter project name"
-            value={formData.projectName}
-            onChange={handleChange}
-            className="input-field w-72 h-8 text-black"
-            required
-          />
-        </div>
-      <div>
-  <label htmlFor="teamLeaderName" className="block text-sm font-medium text-white mb-1">Team Leader Name:</label>
-  <input
-    type="text"
-    id="teamLeaderName"
-    name="teamLeaderName"
-    placeholder="Enter team leader name"
-    value={formData.teamLeaderName}
-    onChange={handleChange}
-    className="input-field w-72 h-8 text-black" 
-    style={{ color: 'black'}}
-    required
-  />
-</div>
-
-
-        <div>
-          <label htmlFor="numberOfTeamMembers" className="block text-sm font-medium text-white mb-1">Number of Team Members:</label>
-          <input
-            type="number"
-            id="numberOfTeamMembers"
-            name="numberOfTeamMembers"
-            placeholder="Enter number of team members"
-            value={formData.numberOfTeamMembers}
-            onChange={handleChange}
-            className="input-field w-72 h-8 text-black"
-            required
-          />
-        </div>
-      
-
-<div className="col-span-2 border border-gray-400 p-4 rounded-lg">
-  <h3 className="text-xl font-semibold text-white mb-2">Team Members:</h3>
-  
-  {formData.teamMembers.map((member, index) => (
-    <div key={index} className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-      <input
-        type="text"
-        placeholder="Name"
-        name="name"
-        value={member.name}
-        onChange={e => handleTeamMembersChange(e, index)}
-        className="input-field h-8 text-black"
-        required
-      />
-      <input
-        type="email"
-        placeholder="Email"
-        name="email"
-        value={member.email}
-        onChange={e => handleTeamMembersChange(e, index)}
-        className="input-field h-8 text-black"
-        required
-      />
-      <div className="flex items-center">
-        <input
-          type="text"
-          placeholder="LinkedIn"
-          name="linkedIn"
-          value={member.linkedIn}
-          onChange={e => handleTeamMembersChange(e, index)}
-          className="input-field w-64 h-8 text-black"
-        />
-        {member.linkedIn && (
-          <a
-            href={member.linkedIn}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-500 ml-2"
-          >
-            LinkedIn
-          </a>
-        )}
-      </div>
-    </div>
-  ))}
-
-  <button type="button" onClick={addTeamMember} className="btn-primary border border-gray-400 text-white bg-blue-500 hover:bg-blue-600">Add Team Member</button>
-</div>
-
-        <div>
-          <label htmlFor="universityOrCollegeName" className="block text-sm font-medium text-white mb-1">University or College Name:</label>
-          <input
-            type="text"
-            id="universityOrCollegeName"
-            name="universityOrCollegeName"
-            placeholder="Enter university or college name"
-            value={formData.universityOrCollegeName}
-            onChange={handleChange}
-            className="input-field w-96 h-8 text-black"
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="stackUsed" className="block text-sm font-medium text-white mb-1">Stack Used:</label>
-          <input
-            type="text"
-            id="stackUsed"
-            name="stackUsed"
-            placeholder="Enter stack used"
-            value={formData.stackUsed}
-            onChange={handleChange}
-            className="input-field w-96 h-8 text-black"
-            required
-          />
-        </div>
-        <div className="col-span-2">
-  <label htmlFor="description" className="block text-sm font-medium text-white mb-1">Description:</label>
-  <textarea
-    id="description"
-    name="description"
-    placeholder="Enter description"
-    value={formData.description}
-    onChange={handleChange}
-    className="input-field w-full text-black"
-    rows="4"
-    required
-  />
-</div>
-
-       
-<div className="col-span-2">
-  <button type="submit" className="btn-primary border border-gray-400 text-white bg-blue-500 hover:bg-blue-600 py-2 px-4 rounded-md">Upload Project</button>
-</div>
-
-      </form>
-    </div>
-  );
-};
-
-export default ProjectUploadForm;

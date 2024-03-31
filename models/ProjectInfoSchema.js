@@ -34,32 +34,27 @@ const projectSchema = new mongoose.Schema({
     },
     description: String,
     tags: [String],
-    files: [String], // Store file URLs or file IDs
-    ratings: [Number], // Array of ratings
-    reviews: [
-        {
-            userId: mongoose.Schema.Types.ObjectId, // Reference to user
-            text: String
-        }
-    ],
-    visibility: {
-        type: String,
-        enum: ["public", "private"],
-        default: "public"
-    },
+    images: [String], // Store file URLs
     status: {
         type: String,
         enum: ["ongoing", "completed", "abandoned"],
         default: "ongoing"
     },
-    likes: [
-        {
-            userId: mongoose.Schema.Types.ObjectId // Reference to user
-        }
-    ],
+    likes: {
+        type: Number,
+        default: 0
+    },
+    views: {
+        type: Number,
+        default: 0
+    },
+    ratings: {
+        type: Number,
+        default: 0
+    },
     comments: [
         {
-            userId: mongoose.Schema.Types.ObjectId, // Reference to user
+            userId: mongoose.Schema.Types.ObjectId,
             text: String,
             createdAt: {
                 type: Date,
@@ -67,33 +62,11 @@ const projectSchema = new mongoose.Schema({
             }
         }
     ],
-    views: {
-        type: Number,
-        default: 0
-    },
     uploadDate: {
         type: Date,
         default: Date.now
     },
-    updateHistory: [
-        {
-            description: String,
-            timestamp: {
-                type: Date,
-                default: Date.now
-            }
-        }
-    ],
-    collaborators: [
-        {
-            name: String,
-            email: String,
-            contactInfo: String
-        }
-    ],
-    externalLinks: [String],
-    dependencies: [String],
-    license: String
+    externalLinks: String,
 });
 
 const Project = mongoose.models.projects || mongoose.model("projects", projectSchema);

@@ -1,13 +1,23 @@
 import { NextRequest } from "next/server";
 var jwt = require('jsonwebtoken');
 
-export const getDataFromToken = (request: NextRequest) => {
+export const getDataFromToken =async (request: NextRequest) => {
     try {
-        const token = request.cookies.get("token")?.value || '';
-        const decodedToken:any = jwt.verify(token, process.env.TOKEN_SECRET!);
-        return decodedToken;
+        const token = await request.cookies.get("token")?.value || '';
+        console.log("Token:", token); // Log retrieved token
+        if (!token) {
+            throw new Error("Token not provided");
+        }
+        console.log("token",token);
+        
+        const jwtSecret = "mysecret";
+        const decodedToken: any = jwt.verify(token, jwtSecret);
+        console.log(decodedToken);
+        
+        return "ahjkfsdjk";
     } catch (error: any) {
         throw new Error(error.message);
     }
-
 }
+
+

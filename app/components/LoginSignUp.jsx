@@ -42,7 +42,7 @@ const LoginSignUp = ({ type, setLoginSignup }) => {
             console.error("Error:", error);
           });
       } else {
-        alert("password not match");
+        alert("password not match or less than 3 characters");
       }
     } else {
       console.log("login");

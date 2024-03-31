@@ -9,7 +9,7 @@ import link from "@/public/icons/link.png";
 import menu from "@/public/icons/menu.png";
 import ProjectDetailCard from "@/app/components/projectComponents/ProjectDetailCard";
 import ProfileInfo from "@/app/components/ProfileScreenComponents/ProfileInfo";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface Props {}
 
@@ -117,7 +117,7 @@ const Page: NextPage<Props> = ({}) => {
           )}
           {showData == 3 && (
             <>
-              <ProjectUploadForm/>
+              <ProjectUploadForm setShowData={setShowData}/>
             </>
           )}
         </div>
