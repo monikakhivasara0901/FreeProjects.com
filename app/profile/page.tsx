@@ -57,7 +57,9 @@ const Page: NextPage<Props> = ({}) => {
             email@gmail.com
           </h3>
         </div>
+        <h1>Created At</h1>
       </div>
+
       <div className="flex flex-1 flex-col w-[75%] bg-slate-700">
         <div className="flex w-[100%] justify-between bg-slate-800">
           <button
@@ -120,6 +122,7 @@ const Page: NextPage<Props> = ({}) => {
           )}
         </div>
       </div>
+
     </div>
   );
 };
