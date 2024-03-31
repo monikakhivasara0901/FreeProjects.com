@@ -64,36 +64,41 @@ const ProjectUploadForm = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
+    setFormData(prevData => ({
       ...prevData,
       [name]: value,
     }));
   };
 
-  const handleTechStackOptionClick = (value) => {
-    if (formData.techStacks.includes(value)) {
-      setFormData((prevData) => ({
-        ...prevData,
-        techStacks: prevData.techStacks.filter((stack) => stack !== value),
-      }));
-    } else {
-      setFormData((prevData) => ({
-        ...prevData,
-        techStacks: [...prevData.techStacks, value],
-      }));
-    }
-  };
-
-  const handleImageChange = (e) => {
-    setFormData((prevData) => ({
+  const handleTeamMembersChange = (e, index) => {
+    const { name, value } = e.target;
+    const newTeamMembers = [...formData.teamMembers];
+    newTeamMembers[index][name] = value;
+    setFormData(prevData => ({
       ...prevData,
-      image: e.target.files[0],
+      teamMembers: newTeamMembers,
     }));
   };
 
-  const handleSubmit = (e) => {
+  
+
+  const addTeamMember = () => {
+    setFormData(prevData => ({
+      ...prevData,
+      teamMembers: [...prevData.teamMembers, { name: '', email: '', linkedIn: '' }],
+    }));
+  };
+
+  
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission here
+    try {
+      const response = await axios.post('/api/projects', formData);
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error submitting project:', error);
+    }
   };
 
   return (
@@ -114,12 +119,12 @@ const ProjectUploadForm = () => {
           </label>
           <input
             type="text"
-            id="title"
-            name="title"
-            placeholder="Enter title"
-            value={formData.title}
+            id="projectName"
+            name="projectName"
+            placeholder="Enter project name"
+            value={formData.projectName}
             onChange={handleChange}
-            className="input-field placeholder-gray-400 rounded-md px-4 py-2 bg-gray-100 border border-gray-300 text-gray-800 focus:outline-none focus:border-blue-500"
+            className="input-field w-72 h-8 text-black"
             required
           />
         </div>
@@ -132,12 +137,12 @@ const ProjectUploadForm = () => {
           </label>
           <input
             type="number"
-            id="teamMembers"
-            name="teamMembers"
+            id="numberOfTeamMembers"
+            name="numberOfTeamMembers"
             placeholder="Enter number of team members"
-            value={formData.teamMembers}
+            value={formData.numberOfTeamMembers}
             onChange={handleChange}
-            className="input-field placeholder-gray-400 rounded-md px-4 py-2 bg-gray-100 border border-gray-300 text-gray-800 focus:outline-none focus:border-blue-500"
+            className="input-field w-72 h-8 text-black"
             required
           />
         </div>
@@ -150,12 +155,12 @@ const ProjectUploadForm = () => {
           </label>
           <input
             type="text"
-            id="teamMemberNames"
-            name="teamMemberNames"
-            placeholder="Enter names of team members"
-            value={formData.teamMemberNames}
+            id="universityOrCollegeName"
+            name="universityOrCollegeName"
+            placeholder="Enter university or college name"
+            value={formData.universityOrCollegeName}
             onChange={handleChange}
-            className="input-field placeholder-gray-400 rounded-md px-4 py-2 bg-gray-100 border border-gray-300 text-gray-800 focus:outline-none focus:border-blue-500"
+            className="input-field w-96 h-8 text-black"
             required
           />
         </div>
@@ -167,13 +172,13 @@ const ProjectUploadForm = () => {
             Emails of Team Members:
           </label>
           <input
-            type="email"
-            id="teamMemberEmails"
-            name="teamMemberEmails"
-            placeholder="Enter emails of team members"
-            value={formData.teamMemberEmails}
+            type="text"
+            id="stackUsed"
+            name="stackUsed"
+            placeholder="Enter stack used"
+            value={formData.stackUsed}
             onChange={handleChange}
-            className="input-field placeholder-gray-400 rounded-md px-4 py-2 bg-gray-100 border border-gray-300 text-gray-800 focus:outline-none focus:border-blue-500"
+            className="input-field w-96 h-8 text-black"
             required
           />
         </div>
@@ -344,3 +349,4 @@ const ProjectUploadForm = () => {
 };
 
 export default ProjectUploadForm;
+

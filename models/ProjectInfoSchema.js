@@ -1,6 +1,11 @@
 import mongoose from "mongoose";
 
 const projectSchema = new mongoose.Schema({
+
+    projectName:{
+        type:String,
+        required:[true, "Please provide the project name"]
+    },
     teamLeaderName: {
         type: String,
         required: [true, "Please provide the team leader's name"]
