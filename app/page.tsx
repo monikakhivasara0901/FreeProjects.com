@@ -1,7 +1,7 @@
 
 "use client";
 import { NextPage } from "next";
-import FunctionCard from "@/app/components/FunctionCard";
+import {FunctionCard, AboutUsCard} from "@/app/components/FunctionCard";
 interface Props {}
 
 const Page: NextPage<Props> = ({}) => {
@@ -9,7 +9,7 @@ const Page: NextPage<Props> = ({}) => {
   return (
     <div className="flex-1 p-3 bg-[#0A1436]">
       <FunctionCard />
-      <FunctionCard />
+      <AboutUsCard />
     </div>
   );
 };
