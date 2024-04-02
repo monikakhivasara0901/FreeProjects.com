@@ -1,9 +1,9 @@
 import { NextRequest } from "next/server";
 var jwt = require('jsonwebtoken');
 
-export const getDataFromToken =async (request: NextRequest) => {
+export const getDataFromToken = async (request: NextRequest) => {
     try {
-        const token = await request.cookies.get("token")?.value || '';
+        const token =  await request.cookies.get('token')?.value || (request.headers.get('Authorization'))|| '';
         console.log("Token:", token); // Log retrieved token
         if (!token) {
             throw new Error("Token not provided");

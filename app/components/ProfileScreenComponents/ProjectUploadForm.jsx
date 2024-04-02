@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const ProjectUploadForm = ({setShowData}) => {
+const ProjectUploadForm = ({setShowWindow}) => {
   const [formData, setFormData] = useState({
     projectName: "ABC",
     teamLeaderName: "John Doe",
@@ -74,7 +74,7 @@ const ProjectUploadForm = ({setShowData}) => {
       const response = await axios.post("/api/uploadProject", formData);
       console.log(response.data.success);
       if(response.data.success){
-        setShowData(1);
+        setShowWindow(1);
       }
     } catch (error) {
       console.error("Error submitting project:", error);

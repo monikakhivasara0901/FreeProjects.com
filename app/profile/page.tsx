@@ -10,11 +10,32 @@ import menu from "@/public/icons/menu.png";
 import ProjectDetailCard from "@/app/components/projectComponents/ProjectDetailCard";
 import ProfileInfo from "@/app/components/ProfileScreenComponents/ProfileInfo";
 import { useEffect, useState } from "react";
+import ProjectDescriptionBox from "@/app/components/ProjectDescriptionBox";
 
 interface Props {}
 
 const Page: NextPage<Props> = ({}) => {
-  const [showData, setShowData] = useState(0);
+  const [ShowWindow, setShowWindow] = useState(0);
+  const [UserAllData, setUserAllData] = useState({});
+  const [showProjectDetails, setShowProjectDetails] = useState(false);
+  console.log(UserAllData, "UserAllData");
+  
+
+  // request the userprojectinfo route to fetch data
+  useEffect(() => {
+    fetch("/api/userprojectinfo")
+      .then((res) => res.json())
+      .then((data) => {
+        setUserAllData(data.data);
+      });
+  }, []);
+
+
+  const handleShowProject = (projectDetails: any) => {
+    setShowProjectDetails(true);
+    console.log(projectDetails);
+    console.log("clicked");
+  };
 
   return (
     <div className="flex flex-1 flex-row h-[95vh] w-[100%]">
@@ -60,69 +81,91 @@ const Page: NextPage<Props> = ({}) => {
         <h1>Created At</h1>
       </div>
 
-      <div className="flex flex-1 flex-col w-[75%] bg-slate-700">
-        <div className="flex w-[100%] justify-between bg-slate-800">
-          <button
-            onClick={() => setShowData(0)}
-            className={`w-[10%] h-8 ${showData !== 1 && "border-r-2 border-r-slate-700"} flex flex-row items-center justify-center ${
-              showData === 0 && "bg-slate-700 rounded-tr-lg"
-            }`}
-          >
-            <Image
-              src={menu}
-              alt="Details"
-              className="w-[30px] h-[20px]"
-              style={{ filter: "invert(100%)" }}
-            />
-          </button>
-          <button
-            onClick={() => setShowData(1)}
-            className={`w-[100%] h-8 ${showData !== 2 && "border-r-2 border-r-slate-700"} flex flex-row items-center ${
-              showData === 1 && "bg-slate-700 rounded-t-lg"
-            }`}
-          >
-            <h1 className="text-center w-[100%]">My Projects</h1>
-            <h1 className="justify-center text-center w-[10%]">1</h1>
-          </button>
-          <button
-            onClick={() => setShowData(2)}
-            className={`w-[100%] h-8 ${showData !== 3 && "border-r-2 border-r-slate-700"} flex flex-row items-center ${
-              showData === 2 && "bg-slate-700 rounded-t-lg"
-            }`}
-          >
-            <h1 className="text-center w-[100%]">Saved Projects</h1>
-            <h1 className="justify-center text-center w-[10%]">2</h1>
-          </button>
-          <button
-            onClick={() => setShowData(3)}
-            className={`w-[100%] h-8 border-r-2 ${
-              showData === 3 && "bg-slate-700 rounded-t-lg"
-            }`}
-          >
-            <h1 className="text-center w-[100%]">Upload New Project</h1>
-          </button>
+      {showProjectDetails ? (
+        <ProjectDescriptionBox setShowProjectDetails={setShowProjectDetails} />
+      ) : (
+        <div className="flex flex-1 flex-col w-[75%] bg-slate-700">
+          <div className="flex w-[100%] justify-between bg-slate-800">
+            <button
+              onClick={() => setShowWindow(0)}
+              className={`w-[10%] h-8 ${
+                ShowWindow !== 1 && "border-r-2 border-r-slate-700"
+              } flex flex-row items-center justify-center ${
+                ShowWindow === 0 && "bg-slate-700 rounded-tr-lg"
+              }`}
+            >
+              <Image
+                src={menu}
+                alt="Details"
+                className="w-[30px] h-[20px]"
+                style={{ filter: "invert(100%)" }}
+              />
+            </button>
+            <button
+              onClick={() => setShowWindow(1)}
+              className={`w-[100%] h-8 ${
+                ShowWindow !== 2 && "border-r-2 border-r-slate-700"
+              } flex flex-row items-center ${
+                ShowWindow === 1 && "bg-slate-700 rounded-t-lg"
+              }`}
+            >
+              <h1 className="text-center w-[100%]">My Projects</h1>
+              <h1 className="justify-center text-center w-[10%]">1</h1>
+            </button>
+            <button
+              onClick={() => setShowWindow(2)}
+              className={`w-[100%] h-8 ${
+                ShowWindow !== 3 && "border-r-2 border-r-slate-700"
+              } flex flex-row items-center ${
+                ShowWindow === 2 && "bg-slate-700 rounded-t-lg"
+              }`}
+            >
+              <h1 className="text-center w-[100%]">Saved Projects</h1>
+              <h1 className="justify-center text-center w-[10%]">2</h1>
+            </button>
+            <button
+              onClick={() => setShowWindow(3)}
+              className={`w-[100%] h-8 border-r-2 ${
+                ShowWindow === 3 && "bg-slate-700 rounded-t-lg"
+              }`}
+            >
+              <h1 className="text-center w-[100%]">Upload New Project</h1>
+            </button>
+          </div>
+          <div className="w-[100%] h-[100%] overflow-scroll scrollbar-hide">
+            {ShowWindow == 0 && (
+              <ProfileInfo />
+            )}
+            {ShowWindow == 1 && (
+              <>
+                {UserAllData.UploadedProjects.map((project: any) => (
+                  <ProjectDetailCard
+                    key={project._id}
+                    project={project}
+                    handleShowProject={handleShowProject}
+                  />
+                ))}
+              </>
+            )}
+            {ShowWindow == 2 && (
+              <>
+                {UserAllData.SavedProjects.map((project: any) => (
+                  <ProjectDetailCard
+                    key={project._id}
+                    project={project}
+                    handleShowProject={handleShowProject}
+                  />
+                ))}
+              </>
+            )}
+            {ShowWindow == 3 && (
+              <>
+                <ProjectUploadForm setShowWindow={setShowWindow} />
+              </>
+            )}
+          </div>
         </div>
-        <div className="w-[100%] h-[100%] overflow-scroll scrollbar-hide">
-          {showData == 0 && <ProfileInfo/>}
-          {showData == 1 && (
-            <>
-              <ProjectDetailCard />
-            </>
-          )}
-          {showData == 2 && (
-            <>
-              <ProjectDetailCard />
-              <ProjectDetailCard />
-            </>
-          )}
-          {showData == 3 && (
-            <>
-              <ProjectUploadForm setShowData={setShowData}/>
-            </>
-          )}
-        </div>
-      </div>
-
+      )}
     </div>
   );
 };

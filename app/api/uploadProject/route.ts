@@ -1,7 +1,8 @@
 import { connect } from "@/dbConfig/dbConfig";
 import { NextRequest, NextResponse } from "next/server";
-import Project from "@/models/ProjectInfoSchema";
-
+import Project from "@/models/Project";
+import User from "@/models/User";
+import UserProfile from "@/models/UserProfile";
 
 import mongoose, { Document } from "mongoose";
 
@@ -10,7 +11,7 @@ interface TeamMember {
   name: string;
   email: string;
   socialMedia: {
-      linkedIn: string;
+    linkedIn: string;
   };
 }
 
@@ -40,9 +41,6 @@ interface ProjectDocument extends Document {
   uploadDate: Date;
   externalLinks: string;
 }
-
-
-
 
 export async function POST(request: NextRequest) {
   try {
@@ -80,10 +78,24 @@ export async function POST(request: NextRequest) {
       externalLinks,
     });
 
-   
-
     // now save project in database
     const savedProject = await project.save();
+
+    // get the id and add in profile uploaded project array
+    console.log("called");
+    const id = "6609604c0dd8b060c4041523";
+    const userId = new mongoose.Types.ObjectId(id);
+    console.log(userId);
+
+    const UserData = await User.findOne({ _id: userId });
+    const UserProfileData = await UserProfile.findOne({
+      _id: UserData.userProfile,
+    });
+
+    if (UserProfileData) {
+      UserProfileData.uploadedProjects.push(savedProject._id);
+      await UserProfileData.save();
+    }
 
     return NextResponse.json({
       message: "Project uploaded successfully",
