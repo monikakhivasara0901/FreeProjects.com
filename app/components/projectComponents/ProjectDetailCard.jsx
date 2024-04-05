@@ -11,7 +11,7 @@ import github from "@/public/icons/github.png";
 import linkedin from "@/public/icons/linkedin.png";
 import StarRatingComponent from "react-star-rating-component";
 
-const ProjectDetailCard = ({handleShowProject}) => {
+const ProjectDetailCard = ({handleShowProject, project}) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [liked, setLiked] = useState(false);
 

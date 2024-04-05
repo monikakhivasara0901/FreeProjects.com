@@ -16,9 +16,17 @@ interface Props {}
 
 const Page: NextPage<Props> = ({}) => {
   const [ShowWindow, setShowWindow] = useState(0);
-  const [UserAllData, setUserAllData] = useState({});
+  const [UserData, setUserData] = useState();
+  const [UserProfileData, setUserProfileData] = useState();
+  const [SavedProjects, setSavedProjects] = useState([]);
+  const [UploadedProjects, setUploadedProjects] = useState([]);
   const [showProjectDetails, setShowProjectDetails] = useState(false);
-  console.log(UserAllData, "UserAllData");
+
+console.log(UserData, "UserData")
+console.log(UserProfileData,"UserProfileData");
+ 
+
+
   
 
   // request the userprojectinfo route to fetch data
@@ -26,7 +34,11 @@ const Page: NextPage<Props> = ({}) => {
     fetch("/api/userprojectinfo")
       .then((res) => res.json())
       .then((data) => {
-        setUserAllData(data.data);
+        let currentData =data.data;
+        setUserData(currentData.UserData);
+        setUserProfileData(currentData.UserProfileData);
+        setSavedProjects(currentData.SavedProjects);
+        setUploadedProjects(currentData.UploadedProjects);
       });
   }, []);
 
@@ -72,10 +84,10 @@ const Page: NextPage<Props> = ({}) => {
               />
             </button>
           </div>
-          <h1 className="mt-1 text-xl text-center font-bold">Full Name</h1>
-          <h2 className="mt-1 text-base text-center font-bold">username</h2>
+          <h1 className="mt-1 text-xl text-center font-bold">{UserProfileData != undefined ? UserProfileData.fullName : "FullName"}</h1>
+          <h2 className="mt-1 text-base text-center font-bold">{UserData != undefined ? UserData.username : "Username"}</h2>
           <h3 className="mt-1 text-sm text-center font-bold">
-            email@gmail.com
+            {UserData != undefined ? UserData.email : "Email"}
           </h3>
         </div>
         <h1>Created At</h1>
@@ -134,11 +146,11 @@ const Page: NextPage<Props> = ({}) => {
           </div>
           <div className="w-[100%] h-[100%] overflow-scroll scrollbar-hide">
             {ShowWindow == 0 && (
-              <ProfileInfo />
+              <ProfileInfo UserProfileData={UserProfileData} />
             )}
             {ShowWindow == 1 && (
               <>
-                {UserAllData.UploadedProjects.map((project: any) => (
+                  {UploadedProjects.map((project: any) => (
                   <ProjectDetailCard
                     key={project._id}
                     project={project}
@@ -149,7 +161,7 @@ const Page: NextPage<Props> = ({}) => {
             )}
             {ShowWindow == 2 && (
               <>
-                {UserAllData.SavedProjects.map((project: any) => (
+                {SavedProjects.map((project: any) => (
                   <ProjectDetailCard
                     key={project._id}
                     project={project}

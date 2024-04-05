@@ -8,7 +8,8 @@ import photocamera from "@/public/icons/photo-camera.png";
 import layer from "@/public/icons/layer.png";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
 // // Schema for saved projects
 // const savedProjectSchema = new mongoose.Schema({
 //     projectId: {
@@ -80,9 +81,14 @@ import { useState } from "react";
 //     }
 // });
 
-const ProfileInfo = ({}) => {
+const ProfileInfo = ({ UserProfileData }) => {
   const [edit, setEdit] = useState(false);
   const [selectedTechnologies, setSelectedTechnologies] = useState([]);
+  const [ProfileData, setProfileData] = useState(UserProfileData);
+
+  useEffect(()=>{
+    setProfileData(UserProfileData);
+  })
 
   const technologiesData = [
     { id: 1, domain: "Frontend", name: "React" },
@@ -174,7 +180,9 @@ const ProfileInfo = ({}) => {
               placeholder="FullName"
             />
           ) : (
-            <h1 className="text-3xl mt-[9%] font-bold">FullName</h1>
+            <h1 className="text-3xl mt-[9%] font-bold">
+              {ProfileData != undefined ? ProfileData.fullName : "FullName"}
+            </h1>
           )}
         </div>
         <div className="absolute left-16 top-[5%] rounded-full  m-2">
@@ -199,7 +207,9 @@ const ProfileInfo = ({}) => {
         </div>
         <div className="flex flex-col justify-center items-start ml-[27%]">
           {!edit ? (
-            <h1 className="text-base">username</h1>
+            <h1 className="text-base">
+              {ProfileData != undefined ? ProfileData.username : "Username"}
+            </h1>
           ) : (
             <input
               className="mt-1 rounded-sm pl-1 bg-slate-300 text-black w-64"
@@ -208,7 +218,9 @@ const ProfileInfo = ({}) => {
             />
           )}
           {!edit ? (
-            <h1 className="text-base">email</h1>
+            <h1 className="text-base">
+              {ProfileData != undefined ? ProfileData.email : "Email"}
+            </h1>
           ) : (
             <input
               className="mt-1 rounded-sm pl-1 bg-slate-300 text-black w-64"
@@ -220,50 +232,49 @@ const ProfileInfo = ({}) => {
       </div>
 
       <div className="flex flex-row w-[100%]">
-        <div className="flex flex-col justify-center items-start border-2 border-slate-500 m-3 p-4 rounded-md w-[40%] ">
+        <div className="flex flex-col  items-start border-2 border-slate-500 m-3 p-4 rounded-md w-[40%] ">
           <h1 className="text-3xl font-semibold mb-2">Links</h1>
-          <div className="flex flex-col justify-center items-center">
-            {/* github */}
-            <div className="flex flex-row items-center m-2">
-              <Image
-                src={github}
-                alt="profile"
-                width={20}
-                height={20}
-                style={{ filter: "invert(100%)" }}
-              />
-              {edit ? (
-                <input
-                  className="ml-2 rounded-sm pl-1 bg-slate-300 text-black w-64"
-                  type="text"
-                  placeholder="Github"
-                />
-              ) : (
-                <h1 className="ml-2">github.com</h1>
-              )}
-            </div>
 
-            {/* linked in */}
-            <div className="flex flex-row  items-center m-2">
-              <Image
-                src={linkedin}
-                alt="Linked In"
-                width={20}
-                height={20}
-                style={{ filter: "invert(100%)" }}
+          {/* linked in */}
+          <div className="flex flex-row  items-center m-2">
+            <Image
+              src={linkedin}
+              alt="Linked In"
+              width={20}
+              height={20}
+              style={{ filter: "invert(100%)" }}
+            />
+            {edit ? (
+              <input
+                type="text"
+                className="ml-2 rounded-sm pl-1 bg-slate-300 text-black w-64"
+                placeholder="Linked In"
               />
-              {edit ? (
-                <input
-                  type="text"
-                  className="ml-2 rounded-sm pl-1 bg-slate-300 text-black w-64"
-                  placeholder="Linked In"
-                />
-              ) : (
-                <h1 className="ml-2">linkedin.com</h1>
-              )}
-            </div>
+            ) : (
+              <h1 className="ml-2">{ProfileData != undefined ? ProfileData.linkedin : "LinkedIn.com"}</h1>
+            )}
+          </div>
+          <div className="flex flex-row items-center m-2">
+            <Image
+              src={link}
+              alt="profile"
+              width={20}
+              height={20}
+              style={{ filter: "invert(100%)" }}
+            />
+            {edit ? (
+              <input
+                className="ml-2 rounded-sm pl-1 bg-slate-300 text-black w-64"
+                type="text"
+                placeholder="Github"
+              />
+            ) : (
+              <h1 className="ml-2">
+                {ProfileData != undefined ? ProfileData.websiteUrl : "github.com"}
+              </h1>
+            )}
 
-            {/* personal website */}
+            {/* personal website
             <div className="flex flex-row items-center m-2">
               <Image
                 src={link}
@@ -281,7 +292,7 @@ const ProfileInfo = ({}) => {
               ) : (
                 <h1 className="ml-2">personalprofile.com</h1>
               )}
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -322,15 +333,7 @@ const ProfileInfo = ({}) => {
             />
           ) : (
             <p className="ml-2">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-              Repellendus mollitia, aliquam est odio cum et, consequatur
-              repellat deleniti architecto praesentium dignissimos, provident
-              autem optio perspiciatis dolore cumque perferendis. Quae, sint!
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Error
-              molestiae saepe consectetur similique, velit quisquam doloremque
-              reiciendis explicabo accusamus ducimus veritatis necessitatibus?
-              Quisquam, unde. Voluptatibus quaerat consequuntur alias molestias
-              ratione!
+              {ProfileData != undefined ? ProfileData.bio : "Bio"}
             </p>
           )}
         </div>
