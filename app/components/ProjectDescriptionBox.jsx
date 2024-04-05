@@ -9,11 +9,73 @@ import heart from "@/public/icons/heart.png";
 import heartFill from "@/public/icons/heart-fill.png";
 import github from "@/public/icons/github.png";
 import linkedin from "@/public/icons/linkedin.png";
+import gobackarrow from "@/public/icons/go-back-arrow.png";
 import StarRatingComponent from "react-star-rating-component";
 
-const ProjectDescriptionBox = ({ setShowProjectDetails }) => {
+// {_id: '660b8eadf5b4d8186ea9b892', projectName: 'ABC', teamLeaderName: 'John Doe', numberOfTeamMembers: 4, teamMembers: Array(4), …}
+// comments
+// : 
+// []
+// description
+// : 
+// "This project aims to develop a cutting-edge web application."
+// externalLinks
+// : 
+// "fdjskflas"
+// images
+// : 
+// (2) ['https://example.com/image1.jpg', 'https://example.com/image2.jpg']
+// likes
+// : 
+// 0
+// numberOfTeamMembers
+// : 
+// 4
+// projectName
+// : 
+// "ABC"
+// ratings
+// : 
+// 0
+// stackUsed
+// : 
+// (3) ['HTML', 'CSS', 'JavaScript']
+// status
+// : 
+// "ongoing"
+// tags
+// : 
+// (3) ['web development', 'frontend', 'HTML5']
+// teamLeaderName
+// : 
+// "John Doe"
+// teamMembers
+// : 
+// (4) [{…}, {…}, {…}, {…}]
+// universityOrCollegeName
+// : 
+// "fsasfs"
+// uploadDate
+// : 
+// "2024-04-02T04:50:53.432Z"
+// views
+// : 
+// 0
+// __v
+// : 
+// 0
+// _id
+// : 
+// "660b8eadf5b4d8186ea9b892"
+// [[Prototype]]
+// : 
+// Object
+
+const ProjectDescriptionBox = ({ setShowProjectDetails, showProjectDetailsData }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [liked, setLiked] = useState(false);
+
+  console.log(showProjectDetailsData, "showProjectDetailsData");
 
   const images = [
     { src: Image1, alt: "Image1", color: "bg-orange-500" },
@@ -65,12 +127,12 @@ const ProjectDescriptionBox = ({ setShowProjectDetails }) => {
     stackUsed: ["HTML", "CSS", "JavaScript", "React", "Node.js", "MongoDB"],
     description: "This is a sample project description.",
     tags: ["Web Development", "Full Stack", "React", "MongoDB"],
-    // Add more fields as needed
   };
 
   return (
     <div className="flex flex-col items-center p-2 bg-gray-800 justify-between w-[98%] h-[100vh] overflow-y-scroll scrollbar-hide">
       <div className="flex flex-none h-[500px] w-[100%] ml-1 items-center relative">
+      <Image src={gobackarrow} style={{ filter: "invert(100%)" }} alt="" onClick={()=>setShowProjectDetails(false)} className="absolute top-5 rounded-full left-5 w-[30px] h-[30px]" />
         <div className="flex-1 h-[100%] overflow-auto scrollbar-hide">
           {images.map((image, index) => (
             <Image
@@ -102,12 +164,10 @@ const ProjectDescriptionBox = ({ setShowProjectDetails }) => {
 
       <div className="flex flex-row w-[100%]">
         <div className="flex-1 p-2 h-[100%] w-[75%] mx-1 items-center justify-around">
-          <h1 className="font-bold text-xl m-1">Project Name</h1>
-          <h1 className="font-bold text-sm m-1">University Name</h1>
+          <h1 className="font-bold text-xl m-1">{showProjectDetailsData.projectName}</h1>
+          <h1 className="font-bold text-sm m-1">{showProjectDetailsData.universityOrCollegeName}</h1>
           <p className="text-wrap text-sm m-1 mb-2 h-[40%]">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam
-            doloribus dignissimos aperiam aliquam eaque, possimus nam rem harum
-            libero esse?
+            {showProjectDetailsData.description}
           </p>
         </div>
 
@@ -115,16 +175,16 @@ const ProjectDescriptionBox = ({ setShowProjectDetails }) => {
           <div className="flex flex-row justify-between items-center w-[100%] mb-1">
             <div className="flex flex-col justify-betwee items-center m-1">
               <h1 className="text-sm m-1">
-                Likes<span> : 0</span>
+                Likes<span> : {showProjectDetailsData.likes}</span>
               </h1>
               <h1 className="text-sm m-1">
-                Views<span> : 0</span>
+                Views<span> : {showProjectDetailsData.views}</span>
               </h1>
               <StarRatingComponent
                 className="ml-1"
                 name="rate1"
                 starCount={5}
-                value={4}
+                value={showProjectDetailsData.rating}
               />
             </div>
             <div className="flex flex-col justify-betwee items-center m-1">
@@ -164,32 +224,32 @@ const ProjectDescriptionBox = ({ setShowProjectDetails }) => {
             </div>
           </div>
           <div>
-            <h1>Status : Live/Completed/Ongoing</h1>
+            <h1>Status : {showProjectDetailsData.status}</h1>
           </div>
           <div className="flex flex-col justify-center items-center w-[90%] mb-1">
             <button className="w-[100%] h-8 m-1  border-2  border-white rounded-xl">
               Explore Details
             </button>
-            <button className="w-[100%] h-8 m-1 border-2  border-white rounded-xl">
+            {showProjectDetailsData.status === "Live" && <button className="w-[100%] h-8 m-1 border-2  border-white rounded-xl">
               Live Project
-            </button>
+            </button>}
           </div>
         </div>
       </div>
 
       <div className="flex flex-col w-[100%] p-2 h-[100%] mx-1">
         <h1 className="font-bold text-2xl mb-2">
-          Team Leader Name : {project.teamLeaderName}
+          Team Leader Name : {showProjectDetailsData.teamLeaderName}
         </h1>
         <h1 className="font-bold text-xl">
-          University or College Name : {project.universityOrCollegeName}
+          University or College Name : {showProjectDetailsData.universityOrCollegeName}
         </h1>
         <h1 className="font-bold text-lg">
-          Number of Team Members : {project.numberOfTeamMembers}
+          Number of Team Members : {showProjectDetailsData.numberOfTeamMembers}
         </h1>
         <div className="flex flex-col justify-start items-start mt-2  w-[100%]">
           <h1 className="font-bold text-2xl">Team Members:</h1>
-          {project.teamMembers.map((member, index) => (
+          {showProjectDetailsData.teamMembers.map((member, index) => (
             <div
               key={index}
               className="flex flex-row justify-start items-start ml-4 w-[100%]"
@@ -197,7 +257,7 @@ const ProjectDescriptionBox = ({ setShowProjectDetails }) => {
               <div className="w-1/3 m-1">{index+1}. {member.name}</div>
               <div className="w-1/3 m-1">Email: {member.email}</div>
               <div className="w-1/3 m-1">
-                LinkedIn: {member.socialMedia.linkedin}
+                LinkedIn: {member.socialMedia.linkedIn}
               </div>
             </div>
           ))}
@@ -205,7 +265,7 @@ const ProjectDescriptionBox = ({ setShowProjectDetails }) => {
         <div className="flex flex-col justify-start items-start">
           <h1 className="font-bold text-xl">Tags</h1>
           <div className="flex flex-row justify-start items-center flex-wrap">
-            {project.tags.map((tag, index) => (
+            {showProjectDetailsData.tags.map((tag, index) => (
               <h1 key={index} className="text-xs m-1 mr-2">
                 {tag}
               </h1>
@@ -216,7 +276,7 @@ const ProjectDescriptionBox = ({ setShowProjectDetails }) => {
         <div className="flex flex-col justify-start items-start">
           <h1 className="font-bold text-xl">Technologies Used</h1>
           <div className="flex flex-row justify-start items-center flex-wrap">
-            {project.stackUsed.map((tech, index) => (
+            {showProjectDetailsData.stackUsed.map((tech, index) => (
               <h1 key={index} className="text-xs m-1 mr-2">
                 {tech}
               </h1>

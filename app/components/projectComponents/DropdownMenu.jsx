@@ -16,7 +16,7 @@ const DropdownMenu = ({ title, data }) => {
   };
 
   return (
-    <div className="border-2 border-gray-500 rounded-lg justify-center items-center mb-1">
+    <div className="border-2 border-gray-500 rounded-lg justify-center items-center mb-1 ">
       <button
         onClick={toggleMenu}
         className={`flex flex-row justify-between w-full items-center rounded-lg p-2 pr-3 ${
@@ -33,7 +33,7 @@ const DropdownMenu = ({ title, data }) => {
       </button>
 
       {isOpen && (
-        <ul className="p-3 pt-1">
+        <ul className="p-3 pt-1 overflow-y-scroll max-h-[45vh] scrollbar-hide">
           {data.map((item) => (
             <button
               onClick={() => handleCheckboxChange(item)}

@@ -8,6 +8,7 @@ import photocamera from "@/public/icons/photo-camera.png";
 import layer from "@/public/icons/layer.png";
 import Image from "next/image";
 import Link from "next/link";
+import {technologiesData} from "@/utils/data"
 import { useEffect, useState } from "react";
 
 // // Schema for saved projects
@@ -90,42 +91,42 @@ const ProfileInfo = ({ UserProfileData }) => {
     setProfileData(UserProfileData);
   })
 
-  const technologiesData = [
-    { id: 1, domain: "Frontend", name: "React" },
-    { id: 2, domain: "Frontend", name: "Vue.js" },
-    { id: 3, domain: "Frontend", name: "Angular" },
-    { id: 4, domain: "Frontend", name: "Svelte" },
-    { id: 5, domain: "Backend", name: "Node.js" },
-    { id: 6, domain: "Backend", name: "Django" },
-    { id: 7, domain: "Backend", name: "Express.js" },
-    { id: 8, domain: "Backend", name: "Flask" },
-    { id: 9, domain: "Database", name: "MongoDB" },
-    { id: 10, domain: "Database", name: "MySQL" },
-    { id: 11, domain: "Database", name: "PostgreSQL" },
-    { id: 12, domain: "Database", name: "SQLite" },
-    { id: 13, domain: "Database", name: "Firebase" },
-    { id: 14, domain: "Other", name: "Next.js" },
-    { id: 15, domain: "Other", name: "Laravel" },
-    { id: 16, domain: "Other", name: "Deno" },
-    { id: 17, domain: "Other", name: "Gatsby.js" },
-    { id: 18, domain: "Other", name: "Nuxt.js" },
-    { id: 19, domain: "Other", name: "Gulp.js" },
-    { id: 20, domain: "Other", name: "NPM" },
-    { id: 21, domain: "Other", name: "Yarn" },
-    { id: 22, domain: "Other", name: "NPM" },
-    { id: 23, domain: "Other", name: "Yarn" },
-    { id: 24, domain: "Other", name: "NPM" },
-    { id: 25, domain: "Other", name: "Yarn" },
-    { id: 26, domain: "Other", name: "NPM" },
-    { id: 27, domain: "Other", name: "Yarn" },
-    { id: 28, domain: "Other", name: "NPM" },
-    { id: 29, domain: "Other", name: "Yarn" },
-    { id: 30, domain: "Other", name: "NPM" },
-    { id: 31, domain: "Other", name: "Yarn" },
-    { id: 32, domain: "Backend", name: "NPM" },
+  // const technologiesData = [
+  //   { id: 1, domain: "Frontend", name: "React" },
+  //   { id: 2, domain: "Frontend", name: "Vue.js" },
+  //   { id: 3, domain: "Frontend", name: "Angular" },
+  //   { id: 4, domain: "Frontend", name: "Svelte" },
+  //   { id: 5, domain: "Backend", name: "Node.js" },
+  //   { id: 6, domain: "Backend", name: "Django" },
+  //   { id: 7, domain: "Backend", name: "Express.js" },
+  //   { id: 8, domain: "Backend", name: "Flask" },
+  //   { id: 9, domain: "Database", name: "MongoDB" },
+  //   { id: 10, domain: "Database", name: "MySQL" },
+  //   { id: 11, domain: "Database", name: "PostgreSQL" },
+  //   { id: 12, domain: "Database", name: "SQLite" },
+  //   { id: 13, domain: "Database", name: "Firebase" },
+  //   { id: 14, domain: "Other", name: "Next.js" },
+  //   { id: 15, domain: "Other", name: "Laravel" },
+  //   { id: 16, domain: "Other", name: "Deno" },
+  //   { id: 17, domain: "Other", name: "Gatsby.js" },
+  //   { id: 18, domain: "Other", name: "Nuxt.js" },
+  //   { id: 19, domain: "Other", name: "Gulp.js" },
+  //   { id: 20, domain: "Other", name: "NPM" },
+  //   { id: 21, domain: "Other", name: "Yarn" },
+  //   { id: 22, domain: "Other", name: "NPM" },
+  //   { id: 23, domain: "Other", name: "Yarn" },
+  //   { id: 24, domain: "Other", name: "NPM" },
+  //   { id: 25, domain: "Other", name: "Yarn" },
+  //   { id: 26, domain: "Other", name: "NPM" },
+  //   { id: 27, domain: "Other", name: "Yarn" },
+  //   { id: 28, domain: "Other", name: "NPM" },
+  //   { id: 29, domain: "Other", name: "Yarn" },
+  //   { id: 30, domain: "Other", name: "NPM" },
+  //   { id: 31, domain: "Other", name: "Yarn" },
+  //   { id: 32, domain: "Backend", name: "NPM" },
 
-    // Add more technologies in different domains as needed
-  ];
+  //   // Add more technologies in different domains as needed
+  // ];
 
   // Sample list of projects
   const projects = [

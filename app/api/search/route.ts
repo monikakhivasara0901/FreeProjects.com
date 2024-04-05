@@ -17,11 +17,12 @@ export async function POST(request: NextRequest) {
     console.log("Request Body:", body);
 
     const technologyArray = body.technologies || ['HTML', 'CSS', 'JavaScript'];
+    // const technologyArray = ['HTML', 'CSS', 'JavaScript'];
     
     await client.connect();
 
     // Access the projects collection
-    const collection = client.db("YourDatabaseName").collection("projects");
+    const collection = client.db("FreeProjectsDb").collection("projects");
 
     // Find all documents in the collection
     const cursor = collection.find();
@@ -30,24 +31,24 @@ export async function POST(request: NextRequest) {
     let matchedProjects:any = [];
 
     // Iterate over the cursor and process each document
-    await cursor.forEach((document:any) => {
-      // Process each document here
-      const stackUsed = document.technologies;
-      const universityOrCollegeName = document.universityOrCollegeName;
+await cursor.forEach((document: any) => {
+  // Process each document here
+  const stackUsed = document.technologies || [];
+  const universityOrCollegeName = document.universityOrCollegeName || '';
 
-      const finalArray = stackUsed.concat(universityOrCollegeName);
+  // Concatenate stackUsed and universityOrCollegeName only if universityOrCollegeName is defined
+  const finalArray = universityOrCollegeName ? stackUsed.concat(universityOrCollegeName) : stackUsed;
 
-      // Check if the project includes any of the requested technologies
-      const matchedTechnologyCount = finalArray.filter((tech:any) => technologyArray.includes(tech)).length;
+  // Check if the project includes any of the requested technologies
+  const matchedTechnologyCount = finalArray.filter((tech) => technologyArray.includes(tech)).length;
 
-      // Calculate the score as a percentage
-      const totalTechnologies = technologyArray.length;
-      const scorePercentage = (matchedTechnologyCount / totalTechnologies) * 100;
+  // Calculate the score as a percentage
+  const totalTechnologies = technologyArray.length;
+  const scorePercentage = (matchedTechnologyCount / totalTechnologies) * 100;
 
-     
-        matchedProjects.push({ document, scorePercentage });
-       
-    });
+  matchedProjects.push({ document, scorePercentage });
+});
+
 
     // Sort the arrays based on the matching score in descending order
     matchedProjects.sort((a, b) => b.scorePercentage - a.scorePercentage);

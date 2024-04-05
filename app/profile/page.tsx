@@ -21,6 +21,7 @@ const Page: NextPage<Props> = ({}) => {
   const [SavedProjects, setSavedProjects] = useState([]);
   const [UploadedProjects, setUploadedProjects] = useState([]);
   const [showProjectDetails, setShowProjectDetails] = useState(false);
+  const [showProjectDetailsData, setShowProjectDetailsData] = useState()
 
 console.log(UserData, "UserData")
 console.log(UserProfileData,"UserProfileData");
@@ -43,7 +44,8 @@ console.log(UserProfileData,"UserProfileData");
   }, []);
 
 
-  const handleShowProject = (projectDetails: any) => {
+  const handleShowProject = (projectDetails:any) => {
+    setShowProjectDetailsData(projectDetails);
     setShowProjectDetails(true);
     console.log(projectDetails);
     console.log("clicked");
@@ -94,7 +96,7 @@ console.log(UserProfileData,"UserProfileData");
       </div>
 
       {showProjectDetails ? (
-        <ProjectDescriptionBox setShowProjectDetails={setShowProjectDetails} />
+        <ProjectDescriptionBox setShowProjectDetails={setShowProjectDetails} showProjectDetailsData={showProjectDetailsData} />
       ) : (
         <div className="flex flex-1 flex-col w-[75%] bg-slate-700">
           <div className="flex w-[100%] justify-between bg-slate-800">
