@@ -26,6 +26,17 @@ const ProjectDetailCard = ({handleShowProject, project}) => {
     { src: Image3, alt: "Image3", color: "bg-green-500" },
   ];
 
+  const handleInteraction = async (interactionType) => {
+    try {
+      await axios.put(`/api/projects/${projectData._id}/interaction`, { interactionType });
+      
+      if (interactionType === 'like') {
+        setLiked(true);
+      }
+    } catch (error) {
+      console.error('Error interacting with project:', error);
+    }
+  };
   const showNextImage = () => {
     setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
   };
@@ -35,6 +46,10 @@ const ProjectDetailCard = ({handleShowProject, project}) => {
       (prevIndex) => (prevIndex - 1 + images.length) % images.length
     );
   };
+
+  useEffect(() => {
+    handleInteraction('view');
+  }, []);
 
   return (
     <div onClick={()=>handleShowProject(project)} className="flex flex-wrap items-center justify-between border-2 ml-3 mt-3 h-60 w-[98%] hover:shadow-2xl hover:bg-gray-600 hover: z-50">
@@ -95,7 +110,7 @@ const ProjectDetailCard = ({handleShowProject, project}) => {
             <StarRatingComponent className="ml-1" name="rate1" starCount={5} value={projectData.rating} />
           </div>
           <div className="flex flex-col justify-betwee items-center m-1">
-            <button className="h-5 w-5 m-1" onClick={() => setLiked(!liked)}>
+            <button className="h-5 w-5 m-1" onClick={() => handleInteraction('like')}>
               {liked ? (
                 <Image
                   src={heartFill}

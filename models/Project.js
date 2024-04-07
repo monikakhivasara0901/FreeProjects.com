@@ -42,11 +42,13 @@ const projectSchema = new mongoose.Schema({
     },
     likes: {
         type: Number,
-        default: 0
+        default: 0,
+        min:0
     },
     views: {
         type: Number,
-        default: 0
+        default: 0,
+        min:0
     },
     ratings: {
         type: Number,
