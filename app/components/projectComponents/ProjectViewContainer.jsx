@@ -3,26 +3,18 @@ import ProjectDescriptionBox from "@/app/components/ProjectDescriptionBox";
 import { useEffect, useState } from "react";
 
 const ProjectViewContainer = ({ matchedProjects }) => {
-  const filters = [
-    "HTML",
-    "CSS",
-    "JavaScript",
-    "HTML",
-    "CSS",
-    "JavaScript",
-    "HTML",
-    "CSS",
-    "JavaScript",
-  ];
+  const filters = [""];
 
-  // console.log(matchedProjects, "matchedProjects");
+  console.log(matchedProjects, "matchedProjects");
 
   const [showProjectDetails, setShowProjectDetails] = useState(false);
   const [showProjectDetailsData, setShowProjectDetailsData] = useState(false);
 
   const [matchedProjectsData, setMatchedProjectsData] = useState();
 
-  // console.log(matchedProjectsData, "matchedProjectsData");
+  console.log(matchedProjectsData, "matchedProjectsData");
+
+  console.log(matchedProjects, "matchedProjects");
 
   useEffect(() => {
     setMatchedProjectsData(matchedProjects);
@@ -57,10 +49,10 @@ const ProjectViewContainer = ({ matchedProjects }) => {
         />
       ) : (
         <div className="flex-none h-[96%] w-[100%] whitespace-nowrap overflow-auto scrollbar-hide p-1 bg-slate-700">
-          {/* <ProjectDetailCard handleShowProject={handleShowProject} project={project}/> */}
-          {matchedProjectsData != undefined &&
-            matchedProjectsData.map((project) => (
+          {matchedProjects != undefined &&
+            matchedProjects.map((project, index) => (
               <ProjectDetailCard
+               key={index}
                 handleShowProject={handleShowProject}
                 project={project.document}
               />
