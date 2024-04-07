@@ -27,18 +27,18 @@ const NavBar = () => {
       {loginSignUp && (
         <LoginSignUp type={type} setLoginSignup={setLoginSignup} />
       )}
-      <nav className="p-3 bg-gradient-to-r from-[#f1f2b5] to-[#135058]">
+      <nav className="p-3 bg-gradient-to-r from-[#0F3443] to-[#0F3443]">
         <div className=" flex flex-row justify-between items-center">
           <div>
-            <h1 className="m-2 text-3xl font-bold text-black">FreeProjects.com</h1>
+            <h1 className="m-2 text-3xl font-bold text-White">FreeProjects.com</h1>
             <div className="flex-row">
-              <a className="m-2 text-black" href="/">
+              <a className="m-2 text-white" href="/">
                 Home
               </a>
-              <a className="m-2 text-black" href="/projects">
+              <a className="m-2 text-white" href="/projects">
                 Projects
               </a>
-              <a className="m-2 text-black" href="#">
+              <a className="m-2 text-white" href="#">
                 About us
               </a>
             </div>
