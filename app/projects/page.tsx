@@ -29,11 +29,10 @@ const Page: NextPage<Props> = ({}) => {
       .then((res) => res.json())
       .then((data) => {
         setMatchedProjects(data.matchedProjects);
+        console.log(data.matchedProjects);
+        
       });
   }
-
-  useEffect(() => {
-  },[matchedProjects])
 
   useEffect(() => {
     fetch("/api/search", {
