@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image1 from "@/public/images/image1.jpg";
 import Image2 from "@/public/images/image2.jpeg";
 import Image3 from "@/public/images/image3.jpeg";
@@ -18,7 +18,7 @@ const ProjectDetailCard = ({handleShowProject, project}) => {
   const [projectData, setProjectData] = useState(project);
 
   
-  console.log(projectData);
+  // console.log(projectData);
 
   const images = [
     { src: Image1, alt: "Image1", color: "bg-orange-500" },

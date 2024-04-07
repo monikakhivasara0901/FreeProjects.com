@@ -15,14 +15,14 @@ const ProjectViewContainer = ({ matchedProjects }) => {
     "JavaScript",
   ];
 
-  console.log(matchedProjects, "matchedProjects");
+  // console.log(matchedProjects, "matchedProjects");
 
   const [showProjectDetails, setShowProjectDetails] = useState(false);
   const [showProjectDetailsData, setShowProjectDetailsData] = useState(false);
 
   const [matchedProjectsData, setMatchedProjectsData] = useState();
 
-  console.log(matchedProjectsData, "matchedProjectsData");
+  // console.log(matchedProjectsData, "matchedProjectsData");
 
   useEffect(() => {
     setMatchedProjectsData(matchedProjects);
