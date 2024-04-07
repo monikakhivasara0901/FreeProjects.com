@@ -29,14 +29,14 @@
 
 const FunctionCard = ({}) => {
   return (
-    <div className="flex flex-row justify-around p-3 bg-[#0A1436] h-[30rem]">
-      <div className="flex flex-col w-[30%] justify-center items-start ml-[10%]">
+    <div className="flex flex-row justify-around p-3 bg-gradient-to-r from-[#f1f2b5] to-[#135058] h-[50rem]">
+      <div className="flex flex-col w-[25%] justify-center items-start ml-[10%]">
         <div className="flex flex-col justify-start items-start">
-          <h1 className="text-4xl font-bold m-1">Showcase</h1>
-          <h1 className="text-4xl font-bold m-1">your</h1>
-          <h1 className="text-4xl font-bold m-1">innovation</h1>
-          <h1 className="text-4xl font-bold m-1">Here!</h1>
-          <h6 className="text-xs mt-2">Share and discover projects</h6>
+          <h1 className="text-4xl font-bold m-1 text-black">Showcase</h1>
+          <h1 className="text-4xl font-bold m-1 text-black">your</h1>
+          <h1 className="text-4xl font-bold m-1 text-black">innovation</h1>
+          <h1 className="text-4xl font-bold m-1 text-black">Here!</h1>
+          <h6 className="text-xs mt-2 text-black">Share and discover projects</h6>
         </div>
         <div className="flex mt-5 w-[40%]">
           <button className="flex justify-center items-center w-[100%] p-1 border-2 border-red-600 bg-red-600 rounded-2xl">
@@ -54,7 +54,7 @@ const FunctionCard = ({}) => {
 
 const AboutUsCard = ({}) => {
   return (
-    <div className="flex flex-row justify-around p-3 bg-[#0A1436] h-[30rem]">
+    <div className="flex flex-row justify-around p-3 bg-[#0F3443] h-[30rem]">
       <div className="flex flex-col w-[60%] justify-center items-start ml-[10%]">
         <div className="flex flex-col justify-start items-start">
           <h1 className="text-4xl font-bold m-1 text-white">About Us</h1>
