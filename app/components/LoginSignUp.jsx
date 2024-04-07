@@ -87,7 +87,7 @@ const LoginSignUp = ({ type, setLoginSignup }) => {
         >
           <Image src="/icons/close.png" alt="close" width={15} height={15} />
         </button>
-        <div className="container w-[58vh] px-6 py-8 bg-white rounded-lg shadow-md justify-center items-center ">
+        <div className="container w-[58vh] px-6 py-8 bg-gradient-to-r from-[#77B0AA] to-[#77B0AA] rounded-lg shadow-md justify-center items-center ">
           <h2 className="text-3xl font-semibold text-center text-gray-800 mb-2">
             {signup ? "Sign Up" : "Welcome back!"}
           </h2>
@@ -107,7 +107,7 @@ const LoginSignUp = ({ type, setLoginSignup }) => {
                   required
                   value={fullname}
                   onChange={(e) => setFullName(e.target.value)}
-                  className="w-full px-4 py-3 text-black border-2 border-gray-350 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  className="w-full px-4 py-3 bg-[#ffffff] text-black border-2 border-gray-350 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                 />
               </div>
             )}
@@ -166,7 +166,7 @@ const LoginSignUp = ({ type, setLoginSignup }) => {
             <button
               type="submit"
               onClick={(event) => handleLoginSignUpSubmit(event)}
-              className="w-full bg-blue-500 text-white px-4 py-3 rounded-md hover:bg-blue-600 transition duration-300 ease-in-out"
+              className="w-full bg-[#0F3443] text-white px-4 py-3 rounded-md hover:bg-[#0F3443] transition duration-300 ease-in-out"
             >
               {signup ? "Sign Up" : "Login"}
             </button>
