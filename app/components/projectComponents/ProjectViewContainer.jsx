@@ -2,7 +2,7 @@ import ProjectDetailCard from "@/app/components/projectComponents/ProjectDetailC
 import ProjectDescriptionBox from "@/app/components/ProjectDescriptionBox";
 import { useEffect, useState } from "react";
 
-const ProjectViewContainer = ({matchedProjects}) => {
+const ProjectViewContainer = ({ matchedProjects }) => {
   const filters = [
     "HTML",
     "CSS",
@@ -15,16 +15,18 @@ const ProjectViewContainer = ({matchedProjects}) => {
     "JavaScript",
   ];
 
-  console.log(matchedProjects,"matchedProjects");
+  console.log(matchedProjects, "matchedProjects");
 
   const [showProjectDetails, setShowProjectDetails] = useState(false);
   const [showProjectDetailsData, setShowProjectDetailsData] = useState(false);
 
   const [matchedProjectsData, setMatchedProjectsData] = useState();
 
-  useEffect(()=>{
-setMatchedProjectsData(matchedProjects)
-  },[matchedProjects])
+  console.log(matchedProjectsData, "matchedProjectsData");
+
+  useEffect(() => {
+    setMatchedProjectsData(matchedProjects);
+  }, [matchedProjects]);
 
   const handleShowProject = (projectDetails) => {
     setShowProjectDetailsData(projectDetails);
@@ -49,13 +51,20 @@ setMatchedProjectsData(matchedProjects)
         </div>
       </div>
       {showProjectDetails ? (
-        <ProjectDescriptionBox setShowProjectDetails={setShowProjectDetails}  showProjectDetailsData={showProjectDetailsData}/>
+        <ProjectDescriptionBox
+          setShowProjectDetails={setShowProjectDetails}
+          showProjectDetailsData={showProjectDetailsData}
+        />
       ) : (
         <div className="flex-none h-[96%] w-[100%] whitespace-nowrap overflow-auto scrollbar-hide p-1 bg-slate-700">
-        {/* <ProjectDetailCard handleShowProject={handleShowProject} project={project}/> */}
-        {matchedProjectsData != undefined && matchedProjectsData.map((project) => (
-          <ProjectDetailCard handleShowProject={handleShowProject} project={project.document}/>
-        ))}
+          {/* <ProjectDetailCard handleShowProject={handleShowProject} project={project}/> */}
+          {matchedProjectsData != undefined &&
+            matchedProjectsData.map((project) => (
+              <ProjectDetailCard
+                handleShowProject={handleShowProject}
+                project={project.document}
+              />
+            ))}
         </div>
       )}
     </div>

@@ -20,29 +20,26 @@ const NavBar = () => {
   };
 
   const handleProfileClick = () => {
-    router.push("/profile"); // Route to profile screen
+    router.push("/profile"); 
   };
   return (
     <div>
       {loginSignUp && (
         <LoginSignUp type={type} setLoginSignup={setLoginSignup} />
       )}
-      <nav className="p-3 bg-[#0A1436]">
+      <nav className="p-3 bg-gradient-to-r from-[#c8d4e9] via-[#d9e0f0] to-[#e9eef6]">
         <div className=" flex flex-row justify-between items-center">
           <div>
-            <h1 className="m-2 text-3xl font-bold">FreeProjects.com</h1>
+            <h1 className="m-2 text-3xl font-bold text-black">FreeProjects.com</h1>
             <div className="flex-row">
-              <a className="m-2" href="/">
+              <a className="m-2 text-black" href="/">
                 Home
               </a>
-              <a className="m-2" href="/projects">
+              <a className="m-2 text-black" href="/projects">
                 Projects
               </a>
-              <a className="m-2" href="#">
+              <a className="m-2 text-black" href="#">
                 About us
-              </a>
-              <a className="m-2" href="#">
-                Demo
               </a>
             </div>
           </div>
@@ -50,18 +47,18 @@ const NavBar = () => {
           <div className="flex flex-row justify-center items-center h-[100%]">
             <button
               onClick={() => handleLoginSignup("login")}
-              className="p-2 w-20 border-2 border-white rounded-2xl m-2"
+              className="p-2 w-20 border-2 border-[#98a8ab] rounded-2xl m-2"
             >
               Login
             </button>
             <button
               onClick={() => handleLoginSignup("signup")}
-              className="p-2 w-20 border-2 border-white rounded-2xl m-2"
+              className="p-2 w-20 border-2 border-[#98a8ab] rounded-2xl m-2"
             >
               Sign up
             </button>
             <Link href="/profile">
-              <div className="border-2 border-white border-spacing-7 rounded-full m-2" onClick={handleProfileClick}>
+              <div className="border-2 border-[#98a8ab] border-spacing-7 rounded-full m-2" onClick={handleProfileClick}>
                 <Image src={profilepic} alt="profile" width={60} height={60}  className="rounded-full"/>
               </div>
             </Link>

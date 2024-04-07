@@ -22,8 +22,7 @@ const Page: NextPage<Props> = ({}) => {
         }),
         }).then((res) => res.json())
         .then((data) => {
-          console.log(data.matchedProjects);
-          setMatchedProjects(data);
+          setMatchedProjects(data.matchedProjects);
         });
   }, []);
 
