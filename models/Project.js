@@ -36,9 +36,9 @@ const projectSchema = new mongoose.Schema({
     tags: [String],
     images: [String], // Store file URLs
     status: {
-        type: String,
-        enum: ["Ongoing", "Completed", "Live"],
-        default: "Ongoing"
+        type: Number,
+        enum: [1, 2, 3],
+        default: 1
     },
     likes: {
         type: Number,

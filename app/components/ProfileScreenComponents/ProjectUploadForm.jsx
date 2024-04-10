@@ -2,9 +2,23 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Image from "next/image";
 import deleteImg from "@/public/icons/delete.png";
-import {technologiesData} from "@/utils/data"
+import { technologiesData } from "@/utils/data";
 
-const ProjectUploadForm = ({ setShowWindow }) => {
+// Function to convert file to base64
+function convertToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(file);
+    fileReader.onload = () => {
+      resolve(fileReader.result);
+    };
+    fileReader.onerror = (error) => {
+      reject(error);
+    };
+  });
+}
+
+const ProjectUploadForm = ({ setShowWindow, onRefresh }) => {
   const [selectedTechnologies, setSelectedTechnologies] = useState([]);
   console.log(selectedTechnologies);
   const [formData, setFormData] = useState({
@@ -37,11 +51,8 @@ const ProjectUploadForm = ({ setShowWindow }) => {
     stackUsed: ["HTML", "CSS", "JavaScript"],
     description: "This project aims to develop a cutting-edge web application.",
     tags: ["web development", "frontend", "HTML5"],
-    images: [
-      "https://example.com/image1.jpg",
-      "https://example.com/image2.jpg",
-    ],
-    status: "ongoing",
+    images: [],
+    status: 1,
     externalLinks: "fdjskflas",
   });
 
@@ -50,19 +61,20 @@ const ProjectUploadForm = ({ setShowWindow }) => {
       ...prevData,
       stackUsed: [...selectedTechnologies],
     }));
-  }, [selectedTechnologies])
+  }, [selectedTechnologies]);
 
   const handleCheckboxChange = (technology) => {
-    setSelectedTechnologies(prevSelectedTechnologies => {
-      const isSelected = prevSelectedTechnologies.some(t => t.id === technology.id);
+    setSelectedTechnologies((prevSelectedTechnologies) => {
+      const isSelected = prevSelectedTechnologies.some(
+        (t) => t.id === technology.id
+      );
       if (isSelected) {
-        return prevSelectedTechnologies.filter(t => t.id !== technology.id);
+        return prevSelectedTechnologies.filter((t) => t.id !== technology.id);
       } else {
         return [...prevSelectedTechnologies, technology.name];
       }
     });
   };
-  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -102,37 +114,35 @@ const ProjectUploadForm = ({ setShowWindow }) => {
       };
     });
   };
-
-  const handleImageChange = (e) => {
+  // Function to handle file upload and convert to base64
+  const handleFileUpload = async (e) => {
     const files = Array.from(e.target.files);
-    const imageUrls = [];
-    files.forEach((file) => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        imageUrls.push(reader.result);
-        if (imageUrls.length === files.length) {
-          setFormData((prevData) => ({
-            ...prevData,
-            images: [...prevData.images, ...imageUrls],
-          }));
-        }
-      };
-      reader.readAsDataURL(file);
-    });
+    const base64Images = await Promise.all(
+      files.map(async (file) => {
+        const base64 = await convertToBase64(file);
+        return base64;
+      })
+    );
+    setFormData((prevData) => ({
+      ...prevData,
+      images: [...prevData.images, ...base64Images],
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post("/api/uploadProject", formData);
-      console.log(response.data.success);
+      console.log("response", response.data.message);
       if (response.data.success) {
+        onRefresh();
         setShowWindow(1);
       }
     } catch (error) {
       console.error("Error submitting project:", error);
     }
   };
+
 
   return (
     <div className="container mx-auto bg-slate-700 p-8 rounded-lg shadow-md">
@@ -196,7 +206,6 @@ const ProjectUploadForm = ({ setShowWindow }) => {
                 required
               />
             </div>
-            
 
             <div className="m-2">
               <label
@@ -219,7 +228,6 @@ const ProjectUploadForm = ({ setShowWindow }) => {
           </div>
 
           <div className="flex flex-1 flex-col">
-            
             <div className="m-2">
               <label
                 htmlFor="tags"
@@ -242,7 +250,7 @@ const ProjectUploadForm = ({ setShowWindow }) => {
                 className="input-field w-96 h-8 text-black"
               />
             </div>
-            
+
             <div className="m-2">
               <label
                 htmlFor="status"
@@ -257,9 +265,9 @@ const ProjectUploadForm = ({ setShowWindow }) => {
                 onChange={handleChange}
                 className="input-field w-96 h-8 text-black"
               >
-                <option value="ongoing">Ongoing</option>
-                <option value="completed">Completed</option>
-                <option value="abandoned">Live</option>
+                <option value={1}>Ongoing</option>
+                <option value={2}>Completed</option>
+                <option value={3}>Live</option>
               </select>
             </div>
             <div className="m-2">
@@ -292,7 +300,7 @@ const ProjectUploadForm = ({ setShowWindow }) => {
                 name="images"
                 accept="image/*"
                 multiple
-                onChange={handleImageChange}
+                onChange={handleFileUpload}
                 className="input-field w-96 h-8 text-white"
               />
             </div>
@@ -300,78 +308,76 @@ const ProjectUploadForm = ({ setShowWindow }) => {
         </div>
 
         <div className="mt-3">
-              <label
-                htmlFor="description"
-                className="block text-sm font-medium text-white mb-1"
-              >
-                Description:
-              </label>
-              <textarea
-                id="description"
-                name="description"
-                placeholder="Enter description"
-                value={formData.description}
-                onChange={handleChange}
-                className="input-field w-full text-black"
-                rows="4"
-                required
-              />
-            </div>
+          <label
+            htmlFor="description"
+            className="block text-sm font-medium text-white mb-1"
+          >
+            Description:
+          </label>
+          <textarea
+            id="description"
+            name="description"
+            placeholder="Enter description"
+            value={formData.description}
+            onChange={handleChange}
+            className="input-field w-full text-black"
+            rows="4"
+            required
+          />
+        </div>
 
         <div className="col-span-2 border border-gray-400 p-4 rounded-lg mt-3">
-              <h3 className="text-xl font-semibold text-white mb-2">
-                Team Members:
-              </h3>
-              {formData.teamMembers.map((member, index) => (
-                <div
-                  key={index}
-                  className="flex flex-row justify-between gap-4 m-2"
-                >
-                  <input
-                    type="text"
-                    placeholder="Name"
-                    name="name"
-                    value={member.name}
-                    onChange={(e) => handleTeamMembersChange(e, index)}
-                    className="input-field h-8 w-96 text-black"
-                    required
-                  />
-                  <input
-                    type="email"
-                    placeholder="Email"
-                    name="email"
-                    value={member.email}
-                    onChange={(e) => handleTeamMembersChange(e, index)}
-                    className="input-field h-8  w-72 text-black"
-                    required
-                  />
-                  <input
-                    type="text"
-                    placeholder="LinkedIn"
-                    name="linkedIn"
-                    value={member.linkedIn}
-                    onChange={(e) => handleTeamMembersChange(e, index)}
-                    className="input-field  w-72 h-8 text-black"
-                  />
-                  <Image
-                    src={deleteImg}
-                    alt="Delete"
-                    onClick={() => deleteTeamMember(index)}
-                    className="w-[30px] h-[20px]"
-                    style={{ filter: "invert(100%)" }}
-                  />
-
-                </div>
-              ))}
-              <button
-                type="button"
-                onClick={addTeamMember}
-                className="btn-primary border border-gray-400 text-black p-1 pl-2 pr-2 rounded-xl m-2 bg-[#787e97] hover:bg-[#484f6a]"
-              >
-                Add Team Member
-              </button>
-
+          <h3 className="text-xl font-semibold text-white mb-2">
+            Team Members:
+          </h3>
+          {formData.teamMembers.map((member, index) => (
+            <div
+              key={index}
+              className="flex flex-row justify-between gap-4 m-2"
+            >
+              <input
+                type="text"
+                placeholder="Name"
+                name="name"
+                value={member.name}
+                onChange={(e) => handleTeamMembersChange(e, index)}
+                className="input-field h-8 w-96 text-black"
+                required
+              />
+              <input
+                type="email"
+                placeholder="Email"
+                name="email"
+                value={member.email}
+                onChange={(e) => handleTeamMembersChange(e, index)}
+                className="input-field h-8  w-72 text-black"
+                required
+              />
+              <input
+                type="text"
+                placeholder="LinkedIn"
+                name="linkedIn"
+                value={member.linkedIn}
+                onChange={(e) => handleTeamMembersChange(e, index)}
+                className="input-field  w-72 h-8 text-black"
+              />
+              <Image
+                src={deleteImg}
+                alt="Delete"
+                onClick={() => deleteTeamMember(index)}
+                className="w-[30px] h-[20px]"
+                style={{ filter: "invert(100%)" }}
+              />
             </div>
+          ))}
+          <button
+            type="button"
+            onClick={addTeamMember}
+            className="btn-primary border border-gray-400 text-black p-1 pl-2 pr-2 rounded-xl m-2 bg-[#787e97] hover:bg-[#484f6a]"
+          >
+            Add Team Member
+          </button>
+        </div>
 
         <div className="flex flex-col justify-center border-2 border-slate-500  rounded-md mt-3">
           <div className="flex flex-col border-b-2 border-slate-500 p-2">
@@ -422,9 +428,7 @@ const ProjectUploadForm = ({ setShowWindow }) => {
                     readOnly
                     className="mr-2"
                   />
-                  <label htmlFor={`selected-${technology}`}>
-                    {technology}
-                  </label>
+                  <label htmlFor={`selected-${technology}`}>{technology}</label>
                 </div>
               ))}
             </div>

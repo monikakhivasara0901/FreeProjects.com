@@ -43,6 +43,18 @@ console.log(UserProfileData,"UserProfileData");
       });
   }, []);
 
+  const onRefresh = () => {
+    fetch("/api/userprojectinfo")
+      .then((res) => res.json())
+      .then((data) => {
+        let currentData =data.data;
+        setUserData(currentData.UserData);
+        setUserProfileData(currentData.UserProfileData);
+        setSavedProjects(currentData.SavedProjects);
+        setUploadedProjects(currentData.UploadedProjects);
+      });
+  };
+
 
   const handleShowProject = (projectDetails:any) => {
     setShowProjectDetailsData(projectDetails);
@@ -174,7 +186,7 @@ console.log(UserProfileData,"UserProfileData");
             )}
             {ShowWindow == 3 && (
               <>
-                <ProjectUploadForm setShowWindow={setShowWindow} />
+                <ProjectUploadForm setShowWindow={setShowWindow} onRefresh={onRefresh} />
               </>
             )}
           </div>

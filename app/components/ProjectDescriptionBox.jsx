@@ -12,64 +12,7 @@ import linkedin from "@/public/icons/linkedin.png";
 import gobackarrow from "@/public/icons/go-back-arrow.png";
 import StarRatingComponent from "react-star-rating-component";
 
-// {_id: '660b8eadf5b4d8186ea9b892', projectName: 'ABC', teamLeaderName: 'John Doe', numberOfTeamMembers: 4, teamMembers: Array(4), …}
-// comments
-// : 
-// []
-// description
-// : 
-// "This project aims to develop a cutting-edge web application."
-// externalLinks
-// : 
-// "fdjskflas"
-// images
-// : 
-// (2) ['https://example.com/image1.jpg', 'https://example.com/image2.jpg']
-// likes
-// : 
-// 0
-// numberOfTeamMembers
-// : 
-// 4
-// projectName
-// : 
-// "ABC"
-// ratings
-// : 
-// 0
-// stackUsed
-// : 
-// (3) ['HTML', 'CSS', 'JavaScript']
-// status
-// : 
-// "ongoing"
-// tags
-// : 
-// (3) ['web development', 'frontend', 'HTML5']
-// teamLeaderName
-// : 
-// "John Doe"
-// teamMembers
-// : 
-// (4) [{…}, {…}, {…}, {…}]
-// universityOrCollegeName
-// : 
-// "fsasfs"
-// uploadDate
-// : 
-// "2024-04-02T04:50:53.432Z"
-// views
-// : 
-// 0
-// __v
-// : 
-// 0
-// _id
-// : 
-// "660b8eadf5b4d8186ea9b892"
-// [[Prototype]]
-// : 
-// Object
+
 
 const ProjectDescriptionBox = ({ setShowProjectDetails, showProjectDetailsData }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -134,12 +77,14 @@ const ProjectDescriptionBox = ({ setShowProjectDetails, showProjectDetailsData }
       <div className="flex flex-none h-[500px] w-[100%] ml-1 items-center relative">
       <Image src={gobackarrow} style={{ filter: "invert(100%)" }} alt="" onClick={()=>setShowProjectDetails(false)} className="absolute top-5 rounded-full left-5 w-[30px] h-[30px]" />
         <div className="flex-1 h-[100%] overflow-auto scrollbar-hide">
-          {images.map((image, index) => (
+          {showProjectDetailsData.images.map((image, index) => (
             <Image
               key={index}
               className={`flex-none w-[100%] h-[100%] ${image.color}`}
-              src={image.src}
-              alt={image.alt}
+              src={image}
+              alt={"None"}
+              width={500} // Example width
+              height={500} // Example height
               style={{
                 display: index === currentImageIndex ? "block" : "none",
               }}
