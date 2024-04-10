@@ -29,7 +29,7 @@ import Image from "next/image";
 import img2 from "@/public/images/img2.jpeg";
 const FunctionCard = ({}) => {
   return (
-    <div className="flex flex-row justify-around p-3 bg-gradient-to-r from-[#ffffff] to-[#ffffff] h-[50rem]">
+    <div className="flex flex-row justify-around p-3 bg-gradient-to-r from-[#ffffff] to-[#ffffff] h-[40rem]">
       <div className="flex flex-col w-[25%] justify-center items-start ml-[10%]">
         <div className="flex flex-col justify-start items-start">
           <h1 className="text-4xl font-bold m-1 text-black">Showcase</h1>
