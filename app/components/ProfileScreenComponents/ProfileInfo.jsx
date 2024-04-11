@@ -145,14 +145,14 @@ const ProfileInfo = ({ UserProfileData }) => {
             ) : (
               <h1 className="ml-2">
                 {ProfileData != undefined
-                  ? ProfileData.linkedin
+                  ? ProfileData.linkedIn
                   : "LinkedIn.com"}
               </h1>
             )}
           </div>
           <div className="flex flex-row items-center m-2">
             <Image
-              src={link}
+              src={github}
               alt="profile"
               width={20}
               height={20}
@@ -166,31 +166,29 @@ const ProfileInfo = ({ UserProfileData }) => {
               />
             ) : (
               <h1 className="ml-2">
-                {ProfileData != undefined
-                  ? ProfileData.websiteUrl
-                  : "github.com"}
+                {ProfileData != undefined ? ProfileData.gitHub : "github.com"}
               </h1>
             )}
-
-            {/* personal website
-            <div className="flex flex-row items-center m-2">
-              <Image
-                src={link}
-                alt="Personal Website"
-                width={20}
-                height={20}
-                style={{ filter: "invert(100%)" }}
+          </div>
+          <div className="flex flex-row items-center m-2">
+            <Image
+              src={link}
+              alt="Personal Website"
+              width={20}
+              height={20}
+              style={{ filter: "invert(100%)" }}
+            />
+            {edit ? (
+              <input
+                type="text"
+                className="ml-2 rounded-sm pl-1 bg-slate-300 text-black w-64"
+                placeholder="Personal Website"
               />
-              {edit ? (
-                <input
-                  type="text"
-                  className="ml-2 rounded-sm pl-1 bg-slate-300 text-black w-64"
-                  placeholder="Personal Website"
-                />
-              ) : (
-                <h1 className="ml-2">personalprofile.com</h1>
-              )}
-            </div> */}
+            ) : (
+              <h1 className="ml-2">
+                {ProfileData != undefined ? ProfileData.websiteUrl : "github.com"}
+              </h1>
+            )}
           </div>
         </div>
 

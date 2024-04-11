@@ -14,7 +14,7 @@ const LoginSignUp = ({ type, setLoginSignup }) => {
     event.preventDefault();
     if (signup) {
       if (password == conformpassword && password.length > 3) {
-        fetch("http://localhost:3000/api/signup/", {
+        fetch("/api/signup/", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

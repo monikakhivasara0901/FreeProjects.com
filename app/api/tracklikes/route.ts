@@ -1,41 +1,57 @@
 // pages/api/projects/[id]/interaction.ts
-import { NextApiRequest, NextApiResponse } from 'next';
-import { connect } from '@/dbConfig/dbConfig';
-import Project from '../../../models/Project';
+import { NextRequest, NextResponse } from "next/server";
+import { connect } from "@/dbConfig/dbConfig";
+import Project from "@/models/Project";
+import UserProfile from "@/models/UserProfile";
+import User from "@/models/User";
+import { getDataFromToken } from "@/helpers/getDataFromToken";
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const {
-    query: { id },
-    method,
-  } = req;
-
+export async function POST(request: NextRequest) {
   await connect();
 
-  switch (method) {
-    case 'PUT':
-      try {
-        const project = await Project.findById(id);
+  try {
+    const { id, interactionType } = await request.json();
 
-        if (!project) {
-          return res.status(404).json({ error: 'Project not found' });
-        }
+    console.log("Request Body:", id, interactionType);
+    
 
-        if (req.body.interactionType === 'like') {
-          project.likes++;
-        } else if (req.body.interactionType === 'view') {
-          project.views++;
-        }
+    // Find the project by ID
+    const project = await Project.findById(id);
 
-        await project.save();
-        res.status(200).json({ likes: project.likes, views: project.views });
-      } catch (error) {
-        console.error('Error:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+    if (!project) {
+      return NextResponse.json({ error: "Project not found", success: false });
+    }
+
+    // Update project interactions based on interactionType
+    if (interactionType === "like") {
+      project.likes++;
+    } else if (interactionType === "view") {
+      project.views++;
+    }
+
+    // Save the updated project
+    await project.save();
+
+    if (interactionType === "save") {
+      console.log("save");
+      
+      const userId = await getDataFromToken(request);
+      const UserData = await User.findOne({ _id: userId });
+      const UserProfileData = await UserProfile.findOne({
+        _id: UserData.userProfile,
+      });
+      if (!UserProfileData.savedProjects.includes(project._id)) {
+        UserProfileData.savedProjects.push(project._id);
+        await UserProfileData.save();
       }
-      break;
-    default:
-      res.status(405).json({ error: 'Method Not Allowed' });
+      await UserProfileData.save();
+    }
+
+    // Send the response with updated likes and views
+    const response = NextResponse.json({ likes: project.likes, views: project.views });
+    return response;
+  } catch (error) {
+    console.error("Error:", error);
+    return NextResponse.json({ error: "Internal Server Error" });
   }
 }
-
-

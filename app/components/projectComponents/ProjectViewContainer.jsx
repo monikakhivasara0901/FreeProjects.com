@@ -1,8 +1,15 @@
 import ProjectDetailCard from "@/app/components/projectComponents/ProjectDetailCard";
 import ProjectDescriptionBox from "@/app/components/ProjectDescriptionBox";
 import { useEffect, useMemo, useState } from "react";
+import deleteImg from "@/public/icons/delete.png";
+import Image from "next/image";
 
-const ProjectViewContainer = ({ matchedProjects, selectedFilters }) => {
+const ProjectViewContainer = ({
+  matchedProjects,
+  selectedFilters,
+  setFilters,
+  handleApplyFilters,
+}) => {
   const [showProjectDetails, setShowProjectDetails] = useState(false);
   const [showProjectDetailsData, setShowProjectDetailsData] = useState(false);
 
@@ -16,7 +23,7 @@ const ProjectViewContainer = ({ matchedProjects, selectedFilters }) => {
   return (
     <div className="flex-1">
       <div className="flex flex-row items-center justify-between h-10 pl-2 pr-2 bg-[#0a1537]">
-        <div className="flex flex-row items-center w-20">
+        <div className="flex flex-row items-center w-28">
           <h1 className="text-white">Filters : </h1>
         </div>
         <div className="flex flex-row w-full h-8 justify-start overflow-scroll scrollbar-hide">
@@ -26,12 +33,28 @@ const ProjectViewContainer = ({ matchedProjects, selectedFilters }) => {
             </h1>
           ))}
         </div>
+        <div className="flex  bg-red-600 rounded-lg p-1">
+          <Image
+            src={deleteImg}
+            alt="DeleteImg"
+            onClick={() => {
+              setFilters({
+                Technology: [],
+                University: [],
+                SearchBox: [],
+              });
 
+              // handleApplyFilters();
+            }}
+            className="w-[30px] h-[20px] "
+            style={{ filter: "invert(100%)" }}
+          />
+        </div>
         <div className="flex ml-1 flex-end w-20">
           <h3 className="mr-1">
             {matchedProjects !== undefined ? matchedProjects.length : 0}
           </h3>{" "}
-          Items
+          Projects
         </div>
       </div>
       {showProjectDetails ? (

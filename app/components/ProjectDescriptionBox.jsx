@@ -10,6 +10,7 @@ import heartFill from "@/public/icons/heart-fill.png";
 import github from "@/public/icons/github.png";
 import linkedin from "@/public/icons/linkedin.png";
 import gobackarrow from "@/public/icons/go-back-arrow.png";
+import email from "@/public/icons/email.png";
 import StarRatingComponent from "react-star-rating-component";
 
 const ProjectDescriptionBox = ({
@@ -36,44 +37,51 @@ const ProjectDescriptionBox = ({
   };
 
   const project = {
-    teamLeaderName: "Monika Jain",
-    numberOfTeamMembers: 5,
+    projectName: "Project-1",
+    teamLeaderName: "Radhey Kedar",
+    numberOfTeamMembers: 3,
     teamMembers: [
       {
-        name: "Radhey",
-        email: "alice@example.com",
-        socialMedia: { linkedIn: "https://www.linkedin.com/in/alice" },
+        name: "Radhey Kedar",
+        email: "radhey@gmail.com",
+        linkedIn: "https://www.linkedin.com/in/radhey",
       },
       {
-        name: "Atharva",
-        email: "bob@example.com",
-        socialMedia: { linkedIn: "https://www.linkedin.com/in/bob" },
+        name: "Monika Jain",
+        email: "monika@gmail.com",
+        linkedIn: "https://www.linkedin.com/in/monika",
       },
       {
-        name: "Charlie",
-        email: "charlie@example.com",
-        socialMedia: { linkedIn: "https://www.linkedin.com/in/charlie" },
-      },
-      {
-        name: "David",
-        email: "david@example.com",
-        socialMedia: { linkedIn: "https://www.linkedin.com/in/david" },
-      },
-      {
-        name: "Eva",
-        email: "eva@example.com",
-        socialMedia: { linkedIn: "https://www.linkedin.com/in/eva" },
+        name: "Atharva Kore",
+        email: "atharva@example.com",
+        linkedIn: "https://www.linkedin.com/in/atharva",
       },
     ],
-    universityOrCollegeName: "Example University",
-    stackUsed: ["HTML", "CSS", "JavaScript", "React", "Node.js", "MongoDB"],
-    description: "This is a sample project description.",
-    tags: ["Web Development", "Full Stack", "React", "MongoDB"],
+    universityOrCollegeName: "PCCOE",
+    stackUsed: [],
+    description:
+      "CodeFind is a revolutionary platform designed to streamline the process of discovering open-source projects and their corresponding source code across multiple repositories. Developers can effortlessly explore an extensive range of projects, accessing their source code and documentation from a centralized location. With intuitive search functionalities, comprehensive project details, and seamless integration with popular version control platforms, CodeFind empowers developers to efficiently find, evaluate, and contribute to open-source projects, fostering collaboration and innovation within the developer community.",
+    projectExecutionSteps:
+      "Set up your development environment by cloning the project repository from GitHub and installing dependencies. Configure environment variables and start the backend server, then launch the frontend development server. Access the application via localhost, explore projects, and access their source code. Consider contributing to projects and providing feedback for improvement.",
+    tags: [],
+    images: [],
+    status: 1,
+    projectLink: "www.freeprojects.com",
+    gitHubLink: "https://github.com/Radhey-R-Kedar/FreeProjects.com.git",
+  };
+
+  console.log(showProjectDetailsData);
+  const redirectToGitHub = () => {
+    const githubLink = showProjectDetailsData.gitHubLink;
+    window.open(githubLink);
+  };
+  const redirectToLinkedIn = (linkedIn) => {
+    window.open(linkedIn);
   };
 
   return (
     <div className="flex flex-col items-center p-2 bg-gray-800 justify-between w-[98%] h-[100vh] overflow-y-scroll scrollbar-hide">
-      <div className="flex flex-none h-[500px] w-[100%] ml-1 items-center relative">
+      <div className="flex flex-none h-[500px] w-[100%] m-4 items-center relative">
         <Image
           src={gobackarrow}
           style={{ filter: "invert(50%)" }}
@@ -112,15 +120,16 @@ const ProjectDescriptionBox = ({
         </div>
       </div>
 
-      <div className="flex flex-row w-[100%]">
+      <div className="flex flex-row w-[100%] m-4">
         <div className="flex-1 p-2 h-[100%] w-[75%] mx-1 items-center justify-around">
-          <h1 className="font-bold text-xl m-1">
+          <h1 className="font-bold text-xl m-4">
             {showProjectDetailsData.projectName}
           </h1>
-          <h1 className="font-bold text-sm m-1">
+          <h1 className="font-bold text-lg m-4">
             {showProjectDetailsData.universityOrCollegeName}
           </h1>
-          <p className="text-wrap text-sm m-1 mb-2 h-[40%]">
+          <h1 className="font-bold text-xl m-4">Project Description</h1>
+          <p className="text-wrap text-sm m-4 h-[40%]">
             {showProjectDetailsData.description}
           </p>
         </div>
@@ -159,15 +168,16 @@ const ProjectDescriptionBox = ({
                   />
                 )}
               </button>
-              <button className="h-5 w-5 m-1">
+              {/* <button className="h-5 w-5 m-1">
                 <Image
                   src={linkedin}
                   alt="linkedin"
                   className="w-[20px] h-[20px]"
                   style={{ filter: "invert(100%)" }}
                 />
-              </button>
-              <button className="h-5 w-5 m-1">
+              </button> */}
+
+              <button className="h-5 w-5 m-1" onClick={redirectToGitHub}>
                 <Image
                   src={github}
                   alt="github"
@@ -193,18 +203,18 @@ const ProjectDescriptionBox = ({
         </div>
       </div>
 
-      <div className="flex flex-col w-[100%] p-2 h-[100%] mx-1">
-        <h1 className="font-bold text-2xl mb-2">
+      <div className="flex flex-col w-[100%] p-2 h-[100%] mx-1 mt-3 mb-3">
+        <h1 className="font-bold text-2xl mb-2 m-4">
           Team Leader Name : {showProjectDetailsData.teamLeaderName}
         </h1>
-        <h1 className="font-bold text-xl">
+        <h1 className="font-bold text-xl m-4">
           University or College Name :{" "}
           {showProjectDetailsData.universityOrCollegeName}
         </h1>
-        <h1 className="font-bold text-lg">
+        <h1 className="font-bold text-lg m-4">
           Number of Team Members : {showProjectDetailsData.numberOfTeamMembers}
         </h1>
-        <div className="flex flex-col justify-start items-start mt-2  w-[100%]">
+        <div className="flex flex-col justify-start items-start m-4  w-[100%]">
           <h1 className="font-bold text-2xl">Team Members:</h1>
           {showProjectDetailsData.teamMembers.map((member, index) => (
             <div
@@ -214,14 +224,32 @@ const ProjectDescriptionBox = ({
               <div className="w-1/3 m-1">
                 {index + 1}. {member.name}
               </div>
-              <div className="w-1/3 m-1">Email: {member.email}</div>
-              <div className="w-1/3 m-1">
-                LinkedIn: {member.socialMedia.linkedIn}
+              <div className="w-1/3 m-1 flex flex-row items-center">
+                <Image
+                  src={email}
+                  alt="email"
+                  className="w-[20px] h-[20px]"
+                  style={{ filter: "invert(100%)" }}
+                />{" "}
+                <h1 className=" ml-2"> {member.email}</h1>
               </div>
+
+              <button
+                className="h-5 w-5 m-1 flex flex-row items-center"
+                onClick={() => redirectToLinkedIn(member.link)}
+              >
+                <Image
+                  src={linkedin}
+                  alt="linkedin"
+                  className="w-[20px] h-[20px]"
+                  style={{ filter: "invert(100%)" }}
+                />
+                <h1 className=" ml-2"> {member.linkedIn}</h1>
+              </button>
             </div>
           ))}
         </div>
-        <div className="flex flex-col justify-start items-start">
+        <div className="flex flex-col justify-start items-start m-4">
           <h1 className="font-bold text-xl">Tags</h1>
           <div className="flex flex-row justify-start items-center flex-wrap">
             {showProjectDetailsData.tags.map((tag, index) => (
@@ -232,7 +260,7 @@ const ProjectDescriptionBox = ({
           </div>
         </div>
         {/* tachnologies used */}
-        <div className="flex flex-col justify-start items-start">
+        <div className="flex flex-col justify-start items-start m-4">
           <h1 className="font-bold text-xl">Technologies Used</h1>
           <div className="flex flex-row justify-start items-center flex-wrap">
             {showProjectDetailsData.stackUsed.map((tech, index) => (
@@ -241,6 +269,13 @@ const ProjectDescriptionBox = ({
               </h1>
             ))}
           </div>
+        </div>
+
+        <div className="flex flex-col justify-start items-start m-4">
+          <h1 className="font-bold text-xl m-1">Project Execution Steps</h1>
+          <p className="text-wrap text-sm m-1 mb-2 h-[40%]">
+            {showProjectDetailsData.projectExecutionSteps}
+          </p>
         </div>
       </div>
     </div>

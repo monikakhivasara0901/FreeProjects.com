@@ -12,6 +12,7 @@ import linkedin from "@/public/icons/linkedin.png";
 import emptyBookmark from "@/public/icons/emptyBookmark.png";
 import filledBookmark from "@/public/icons/filledBookmark.png";
 import StarRatingComponent from "react-star-rating-component";
+import axios from "axios";
 
 const ProjectDetailCard = ({ handleShowProject, project }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -27,15 +28,25 @@ const ProjectDetailCard = ({ handleShowProject, project }) => {
 
   const handleInteraction = async (interactionType) => {
     try {
-      // await axios.put(`/api/projects/${projectData._id}/interaction`, {
-      //   interactionType,
-      // });
-
+      
+      const response = await fetch("/api/tracklikes/", {
+        method: "POST", // Change method to POST
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: projectData._id,
+          interactionType: interactionType,
+        }),
+      });
+      console.log(response);
+    
       if (interactionType === "like") {
         setLiked(!liked);
       } else if (interactionType === "save") {
         setSaved(!saved);
       }
+
     } catch (error) {
       console.error("Error interacting with project:", error);
     }
@@ -50,9 +61,10 @@ const ProjectDetailCard = ({ handleShowProject, project }) => {
     );
   };
 
-  useEffect(() => {
-    handleInteraction("view");
-  }, []);
+  const redirectToLink = (link) => {
+    window.open(link);
+  };
+
   useEffect(() => {
     setProjectData(project);
   }, [project]);
@@ -97,7 +109,7 @@ const ProjectDetailCard = ({ handleShowProject, project }) => {
           {projectData.universityOrCollegeName}
         </h1>
         <p className="text-wrap text-sm m-1 mb-2 h-[40%]">
-          {projectData.description}
+          {projectData.description.slice(0, 230)}...
         </p>
         {/* tachnologies used */}
         <div className="flex flex-col justify-start items-start">
@@ -147,14 +159,16 @@ const ProjectDetailCard = ({ handleShowProject, project }) => {
                 />
               )}
             </button>
-            <button className="h-5 w-5 m-1">
-              <Image
-                src={github}
-                alt="github"
-                className="w-[20px] h-[20px]"
-                style={{ filter: "invert(100%)" }}
-              />
-            </button>
+           
+              <button className="h-5 w-5 m-1" onClick={() => redirectToLink(projectData!=undefined ? projectData.gitHubLink:"")}>
+                <Image
+                  src={github}
+                  alt="github"
+                  className="w-[20px] h-[20px]"
+                  style={{ filter: "invert(100%)" }}
+                />
+              </button>
+           
             <button
               className="h-5 w-5 m-1"
               onClick={() => handleInteraction("save")}
@@ -178,11 +192,21 @@ const ProjectDetailCard = ({ handleShowProject, project }) => {
           </div>
         </div>
         <div>
-          <h1>Status : {projectData.status==1 ? "On Going" : projectData.status==2 ?"Completed": "Live"}</h1>
+          <h1>
+            Status :{" "}
+            {projectData.status == 1
+              ? "On Going"
+              : projectData.status == 2
+              ? "Completed"
+              : "Live"}
+          </h1>
         </div>
         <div className="flex flex-col justify-center items-center w-[90%] mb-1">
           <button
-            onClick={() => handleShowProject(project)}
+            onClick={() => {
+              handleShowProject(project);
+              handleInteraction("view");
+            }}
             className="w-[100%] h-8 m-1  border-2  border-white rounded-xl hover:bg-blue-500 "
           >
             Explore Details

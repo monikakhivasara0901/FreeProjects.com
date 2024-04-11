@@ -21,38 +21,36 @@ function convertToBase64(file) {
 const ProjectUploadForm = ({ setShowWindow, onRefresh }) => {
   const [selectedTechnologies, setSelectedTechnologies] = useState([]);
   const [formData, setFormData] = useState({
-    projectName: "ABC",
-    teamLeaderName: "John Doe",
-    numberOfTeamMembers: 4,
+    projectName: "Project-1",
+    teamLeaderName: "Radhey Kedar",
+    numberOfTeamMembers: 3,
     teamMembers: [
       {
-        name: "Alice",
-        email: "alice@example.com",
-        socialMedia: { linkedIn: "https://www.linkedin.com/in/alice" },
+        name: "Radhey Kedar",
+        email: "radhey@gmail.com",
+        linkedIn: "https://www.linkedin.com/in/radhey",
       },
       {
-        name: "Bob",
-        email: "bob@example.com",
-        socialMedia: { linkedIn: "https://www.linkedin.com/in/bob" },
+        name: "Monika Jain",
+        email: "monika@gmail.com",
+        linkedIn: "https://www.linkedin.com/in/monika",
       },
       {
-        name: "Charlie",
-        email: "charlie@example.com",
-        socialMedia: { linkedIn: "https://www.linkedin.com/in/charlie" },
-      },
-      {
-        name: "Dave",
-        email: "dave@example.com",
-        socialMedia: { linkedIn: "https://www.linkedin.com/in/dave" },
+        name: "Atharva Kore",
+        email: "atharva@example.com",
+        linkedIn: "https://www.linkedin.com/in/atharva",
       },
     ],
-    universityOrCollegeName: "fsasfs",
-    stackUsed: ["HTML", "CSS", "JavaScript"],
-    description: "This project aims to develop a cutting-edge web application.",
-    tags: ["web development", "frontend", "HTML5"],
+    universityOrCollegeName: "PCCOE",
+    stackUsed: [],
+    description:
+      "CodeFind is a revolutionary platform designed to streamline the process of discovering open-source projects and their corresponding source code across multiple repositories. Developers can effortlessly explore an extensive range of projects, accessing their source code and documentation from a centralized location. With intuitive search functionalities, comprehensive project details, and seamless integration with popular version control platforms, CodeFind empowers developers to efficiently find, evaluate, and contribute to open-source projects, fostering collaboration and innovation within the developer community.",
+    projectExecutionSteps:"Set up your development environment by cloning the project repository from GitHub and installing dependencies. Configure environment variables and start the backend server, then launch the frontend development server. Access the application via localhost, explore projects, and access their source code. Consider contributing to projects and providing feedback for improvement.",
+    tags: [],
     images: [],
     status: 1,
-    externalLinks: "fdjskflas",
+    projectLink: "www.freeprojects.com",
+    gitHubLink: "https://github.com/Radhey-R-Kedar/FreeProjects.com.git",
   });
 
   useEffect(() => {
@@ -65,10 +63,12 @@ const ProjectUploadForm = ({ setShowWindow, onRefresh }) => {
   const handleCheckboxChange = (technology) => {
     setSelectedTechnologies((prevSelectedTechnologies) => {
       const isSelected = prevSelectedTechnologies.some(
-        (t) => t.id === technology.id
+        (t) => t.name === technology.name
       );
       if (isSelected) {
-        return prevSelectedTechnologies.filter((t) => t.id !== technology.id);
+        return prevSelectedTechnologies.filter(
+          (t) => t.name !== technology.name
+        );
       } else {
         return [...prevSelectedTechnologies, technology.name];
       }
@@ -163,7 +163,7 @@ const ProjectUploadForm = ({ setShowWindow, onRefresh }) => {
                 placeholder="Enter project name"
                 value={formData.projectName}
                 onChange={handleChange}
-                className="input-field w-96 h-8 text-black"
+                className="input-field w-96 h-8 text-black rounded-sm bg-gray-300 pl-2"
                 required
               />
             </div>
@@ -181,7 +181,7 @@ const ProjectUploadForm = ({ setShowWindow, onRefresh }) => {
                 placeholder="Enter team leader name"
                 value={formData.teamLeaderName}
                 onChange={handleChange}
-                className="input-field w-96 h-8 text-black"
+                className="input-field w-96 h-8 text-black rounded-sm bg-gray-300 pl-2"
                 required
               />
             </div>
@@ -199,7 +199,7 @@ const ProjectUploadForm = ({ setShowWindow, onRefresh }) => {
                 placeholder="Enter number of team members"
                 value={formData.numberOfTeamMembers}
                 onChange={handleChange}
-                className="input-field w-96 h-8 text-black"
+                className="input-field w-96 h-8 text-black rounded-sm bg-gray-300 pl-2"
                 required
               />
             </div>
@@ -218,7 +218,7 @@ const ProjectUploadForm = ({ setShowWindow, onRefresh }) => {
                 placeholder="Enter university or college name"
                 value={formData.universityOrCollegeName}
                 onChange={handleChange}
-                className="input-field w-96 h-8 text-black"
+                className="input-field w-96 h-8 text-black rounded-sm bg-gray-300 pl-2"
                 required
               />
             </div>
@@ -244,7 +244,7 @@ const ProjectUploadForm = ({ setShowWindow, onRefresh }) => {
                     tags: e.target.value.split(","),
                   }));
                 }}
-                className="input-field w-96 h-8 text-black"
+                className="input-field w-96 h-8 text-black rounded-sm bg-gray-300 pl-2"
               />
             </div>
 
@@ -260,7 +260,7 @@ const ProjectUploadForm = ({ setShowWindow, onRefresh }) => {
                 name="status"
                 value={formData.status}
                 onChange={handleChange}
-                className="input-field w-96 h-8 text-black"
+                className="input-field w-96 h-8 text-black rounded-sm bg-gray-300 pl-2"
               >
                 <option value={1}>Ongoing</option>
                 <option value={2}>Completed</option>
@@ -269,39 +269,57 @@ const ProjectUploadForm = ({ setShowWindow, onRefresh }) => {
             </div>
             <div className="m-2">
               <label
-                htmlFor="externalLinks"
+                htmlFor="gitHubLink"
                 className="block text-sm font-medium text-white mb-1"
               >
-                External Links:
+                GitHub Links:
               </label>
               <input
                 type="text"
-                id="externalLinks"
-                name="externalLinks"
+                id="gitHubLink"
+                name="gitHubLink"
                 placeholder="Enter external links"
-                value={formData.externalLinks}
+                value={formData.gitHubLink}
                 onChange={handleChange}
-                className="input-field w-96 h-8 text-black"
+                className="input-field w-96 h-8 text-black rounded-sm bg-gray-300 pl-2"
               />
             </div>
             <div className="m-2">
               <label
-                htmlFor="images"
+                htmlFor="gitHubLink"
                 className="block text-sm font-medium text-white mb-1"
               >
-                Images (select multiple):
+                Live Project Links:
               </label>
               <input
-                type="file"
-                id="images"
-                name="images"
-                accept="image/*"
-                multiple
-                onChange={handleFileUpload}
-                className="input-field w-96 h-8 text-white"
+                type="text"
+                id="projectLink"
+                name="projectLink"
+                placeholder="Enter external links"
+                value={formData.projectLink}
+                onChange={handleChange}
+                className="input-field w-96 h-8 text-black rounded-sm bg-gray-300 pl-2"
               />
             </div>
           </div>
+        </div>
+
+        <div className="m-2 flex flex-col  mt-4">
+          <label
+            htmlFor="images"
+            className="block text-sm font-medium text-white mb-1 w-[40%]"
+          >
+            Upload Project Images (you can select multiple)*:
+          </label>
+          <input
+            type="file"
+            id="images"
+            name="images"
+            accept="image/*"
+            multiple
+            onChange={handleFileUpload}
+            className="input-field w-96 h-8 text-white rounded-sm pl-2"
+          />
         </div>
 
         <div className="mt-3">
@@ -317,20 +335,51 @@ const ProjectUploadForm = ({ setShowWindow, onRefresh }) => {
             placeholder="Enter description"
             value={formData.description}
             onChange={handleChange}
-            className="input-field w-full text-black"
+            className="input-field w-full text-black rounded-sm bg-gray-300 pl-2 scrollbar-hide"
+            rows="4"
+            required
+          />
+        </div>
+        <div className="mt-3">
+          <label
+            htmlFor="projectExecutionSteps"
+            className="block text-sm font-medium text-white mb-1"
+          >
+            Steps to run the Project:
+          </label>
+          <textarea
+            id="projectExecutionSteps"
+            name="projectExecutionSteps"
+            placeholder="Enter description"
+            value={formData.projectExecutionSteps}
+            onChange={handleChange}
+            className="input-field w-full text-black rounded-sm bg-gray-300 pl-2 scrollbar-hide"
             rows="4"
             required
           />
         </div>
 
-        <div className="col-span-2 border border-gray-400 p-4 rounded-lg mt-3">
-          <h3 className="text-xl font-semibold text-white mb-2">
-            Team Members:
-          </h3>
+        <div className="col-span-2 border border-gray-400 p-4 pt-0 rounded-lg mt-3">
+          <div className="flex flex-row items-end m-2">
+            <div className="w-[50%]">
+              <h3 className="text-xl font-semibold text-white mb-2">
+                Team Members:
+              </h3>
+            </div>
+            <div className="flex  w-[50%]  justify-end">
+              <button
+                type="button"
+                onClick={addTeamMember}
+                className="btn-primary border-2 text-black p-1 pl-2 pr-2 rounded-xl m-2 bg-[#787e97] hover:bg-[#484f6a]"
+              >
+                Add Team Member
+              </button>
+            </div>
+          </div>
           {formData.teamMembers.map((member, index) => (
             <div
               key={index}
-              className="flex flex-row justify-between gap-4 m-2"
+              className="flex flex-row justify-between items-center gap-4 m-2"
             >
               <input
                 type="text"
@@ -338,7 +387,7 @@ const ProjectUploadForm = ({ setShowWindow, onRefresh }) => {
                 name="name"
                 value={member.name}
                 onChange={(e) => handleTeamMembersChange(e, index)}
-                className="input-field h-8 w-96 text-black"
+                className="input-field h-8 w-96 text-black rounded-sm bg-gray-300 pl-2"
                 required
               />
               <input
@@ -347,7 +396,7 @@ const ProjectUploadForm = ({ setShowWindow, onRefresh }) => {
                 name="email"
                 value={member.email}
                 onChange={(e) => handleTeamMembersChange(e, index)}
-                className="input-field h-8  w-72 text-black"
+                className="input-field h-8  w-72 text-black rounded-sm bg-gray-300 pl-2"
                 required
               />
               <input
@@ -356,24 +405,19 @@ const ProjectUploadForm = ({ setShowWindow, onRefresh }) => {
                 name="linkedIn"
                 value={member.linkedIn}
                 onChange={(e) => handleTeamMembersChange(e, index)}
-                className="input-field  w-72 h-8 text-black"
+                className="input-field  w-72 h-8 text-black rounded-sm bg-gray-300 pl-2"
               />
-              <Image
-                src={deleteImg}
-                alt="Delete"
-                onClick={() => deleteTeamMember(index)}
-                className="w-[30px] h-[20px]"
-                style={{ filter: "invert(100%)" }}
-              />
+              <div className="bg-red-600 p-1 rounded-sm">
+                <Image
+                  src={deleteImg}
+                  alt="Delete"
+                  onClick={() => deleteTeamMember(index)}
+                  className="w-[30px] h-[20px] "
+                  style={{ filter: "invert(100%)" }}
+                />
+              </div>
             </div>
           ))}
-          <button
-            type="button"
-            onClick={addTeamMember}
-            className="btn-primary border border-gray-400 text-black p-1 pl-2 pr-2 rounded-xl m-2 bg-[#787e97] hover:bg-[#484f6a]"
-          >
-            Add Team Member
-          </button>
         </div>
 
         <div className="flex flex-col justify-center border-2 border-slate-500  rounded-md mt-3">

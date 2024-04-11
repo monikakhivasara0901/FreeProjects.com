@@ -16,8 +16,10 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     console.log("Request Body:", body);
 
-    const technologyArray = body.technologies || ['HTML', 'CSS', 'JavaScript'];
-    // const technologyArray = ['HTML', 'CSS', 'JavaScript'];
+    const technologyArray = body.technologies || [];
+ 
+    console.log("Technology Array:", technologyArray.length);
+    
     
     await client.connect();
 
@@ -30,7 +32,8 @@ export async function POST(request: NextRequest) {
     // Array to store documents with matching score
     let matchedProjects:any = [];
 
-    // Iterate over the cursor and process each document
+    if(technologyArray.length > 0){
+      // Iterate over the cursor and process each document
     await cursor.forEach((document: any) => {
       // Process each document here
       const stackUsed = document.stackUsed || [];
@@ -48,16 +51,22 @@ export async function POST(request: NextRequest) {
       const totalTechnologies = technologyArray.length;
       const scorePercentage = totalTechnologies > 0 ? (matchedTechnologyCount / totalTechnologies) * 100 : 0;
   
-      matchedProjects.push({ document, scorePercentage });
+      if(scorePercentage > 0){
+        matchedProjects.push({document, scorePercentage});
+      }
       
   });
   
   // Sort the arrays based on the matching score in descending order
   matchedProjects.sort((a, b) => b.scorePercentage - a.scorePercentage);
-  
-  
 
-    // console.log(matchedProjects);
+  }else{
+
+    await cursor.forEach((document: any) => {
+      matchedProjects.push({document, scorePercentage: 100});
+    });
+  }
+  
 
     return NextResponse.json({
       status: 200,
