@@ -14,9 +14,7 @@ const Page: NextPage<Props> = ({}) => {
   // Combine technologies and universities into a single array
   const selectedFilters = [...filters.Technology, ...filters.University];
 
-  const handleApplyFilters=()=>{
-    console.log(selectedFilters,"--------------------");
-    
+  const handleApplyFilters = () => {
     fetch("/api/search", {
       method: "POST",
       headers: {
@@ -29,10 +27,8 @@ const Page: NextPage<Props> = ({}) => {
       .then((res) => res.json())
       .then((data) => {
         setMatchedProjects(data.matchedProjects);
-        console.log(data.matchedProjects);
-        
       });
-  }
+  };
 
   useEffect(() => {
     fetch("/api/search", {
@@ -54,8 +50,15 @@ const Page: NextPage<Props> = ({}) => {
     <div className="flex flex-col flex-1 h-[110vh]">
       <ProjectTopContainer />
       <div className="flex h-[100%] flex-row">
-        <FilterBox handleApplyFilters={handleApplyFilters} setFilters={setFilters} filters={filters} />
-        <ProjectViewContainer matchedProjects={matchedProjects} />
+        <FilterBox
+          handleApplyFilters={handleApplyFilters}
+          setFilters={setFilters}
+          filters={filters}
+        />
+        <ProjectViewContainer
+          matchedProjects={matchedProjects}
+          selectedFilters={selectedFilters}
+        />
       </div>
     </div>
   );

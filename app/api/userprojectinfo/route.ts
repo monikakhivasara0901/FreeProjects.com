@@ -14,7 +14,9 @@ export async function GET(request: NextRequest) {
 
         const userId = await getDataFromToken(request);
         
+        
         const UserData = await User.findOne({ _id: userId });
+        
         const UserProfileData = await UserProfile.findOne({ _id: UserData.userProfile });
         
         let SavedProjects = [];

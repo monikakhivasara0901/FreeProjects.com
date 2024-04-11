@@ -3,10 +3,9 @@ import upArrow from "@/public/icons/up-arrow.png";
 import downArrow from "@/public/icons/down-arrow.png";
 import Image from "next/image";
 
-const DropdownMenu = ({ title, data, setFilters, filters}) => {
+const DropdownMenu = ({ title, data, setFilters, filters }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
-
 
   const handleCheckboxChange = (item) => {
     const selectedIndex = selectedItems.indexOf(item);
@@ -17,7 +16,9 @@ const DropdownMenu = ({ title, data, setFilters, filters}) => {
       updatedItems = [...selectedItems, item];
     } else {
       // If item is already selected, remove it from the array
-      updatedItems = selectedItems.filter((selectedItem) => selectedItem !== item);
+      updatedItems = selectedItems.filter(
+        (selectedItem) => selectedItem !== item
+      );
     }
 
     setSelectedItems(updatedItems);
@@ -44,7 +45,7 @@ const DropdownMenu = ({ title, data, setFilters, filters}) => {
         <Image
           src={isOpen ? upArrow : downArrow}
           alt="up arrow"
-          className={`w-[15px] h-[15px] ${isOpen ? 'rotate-180' : 'rotate-0'}`}
+          className={`w-[15px] h-[15px] ${isOpen ? "rotate-180" : "rotate-0"}`}
           style={{ filter: "invert(100%)" }}
         />
       </button>

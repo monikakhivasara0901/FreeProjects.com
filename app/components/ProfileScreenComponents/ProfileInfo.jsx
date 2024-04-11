@@ -8,127 +8,18 @@ import photocamera from "@/public/icons/photo-camera.png";
 import layer from "@/public/icons/layer.png";
 import Image from "next/image";
 import Link from "next/link";
-import {technologiesData} from "@/utils/data"
+import { technologiesData } from "@/utils/data";
 import { useEffect, useState } from "react";
-
-// // Schema for saved projects
-// const savedProjectSchema = new mongoose.Schema({
-//     projectId: {
-//         type: mongoose.Schema.Types.ObjectId,
-//         ref: 'Project' // Reference to the Project model
-//     }
-// });
-
-// // Schema for GitHub likes
-// const gitHubLikeSchema = new mongoose.Schema({
-//     repositoryName: String,
-//     repositoryUrl: String
-// });
-
-// // Schema for social media profiles
-// const socialMediaSchema = new mongoose.Schema({
-//     platform: String,
-//     url: String
-// });
-
-// // Schema for skills
-// const skillSchema = new mongoose.Schema({
-//     name: String,
-//     proficiency: {
-//         type: String,
-//         enum: ['Beginner', 'Intermediate', 'Advanced']
-//     }
-// });
-
-// // Schema for uploaded projects
-// const uploadedProjectSchema = new mongoose.Schema({
-//     projectId: {
-//         type: mongoose.Schema.Types.ObjectId,
-//         ref: 'Project' // Reference to the Project model
-//     }
-// });
-
-// // Schema for user profile
-// const userProfileSchema = new mongoose.Schema({
-//     userId: {
-//         type: mongoose.Schema.Types.ObjectId,
-//         ref: 'User' // Reference to the User model
-//     },
-//     username: {
-//         type: String,
-//         required: [true, "Please provide a username"],
-//         unique: true
-//     },
-//     email: {
-//         type: String,
-//         required: [true, "Please provide an email"],
-//         unique: true
-//     },
-//     fullName: String,
-//     bio: String,
-//     avatarUrl: String,
-//     universityOrCollege: String, // University or college name
-//     linkedIn: String,
-//     websiteUrl: String,
-//     location: String,
-//     savedProjects: [savedProjectSchema], // Array of saved projects
-//     gitHubLikes: [gitHubLikeSchema], // Array of GitHub likes
-//     socialMedia: [socialMediaSchema], // Array of social media profiles
-//     skills: [skillSchema], // Array of skills
-//     uploadedProjects: [uploadedProjectSchema], // Array of uploaded projects
-//     createdAt: {
-//         type: Date,
-//         default: Date.now
-//     }
-// });
 
 const ProfileInfo = ({ UserProfileData }) => {
   const [edit, setEdit] = useState(false);
   const [selectedTechnologies, setSelectedTechnologies] = useState([]);
   const [ProfileData, setProfileData] = useState(UserProfileData);
 
-  useEffect(()=>{
+  useEffect(() => {
     setProfileData(UserProfileData);
-  })
+  });
 
-  // const technologiesData = [
-  //   { id: 1, domain: "Frontend", name: "React" },
-  //   { id: 2, domain: "Frontend", name: "Vue.js" },
-  //   { id: 3, domain: "Frontend", name: "Angular" },
-  //   { id: 4, domain: "Frontend", name: "Svelte" },
-  //   { id: 5, domain: "Backend", name: "Node.js" },
-  //   { id: 6, domain: "Backend", name: "Django" },
-  //   { id: 7, domain: "Backend", name: "Express.js" },
-  //   { id: 8, domain: "Backend", name: "Flask" },
-  //   { id: 9, domain: "Database", name: "MongoDB" },
-  //   { id: 10, domain: "Database", name: "MySQL" },
-  //   { id: 11, domain: "Database", name: "PostgreSQL" },
-  //   { id: 12, domain: "Database", name: "SQLite" },
-  //   { id: 13, domain: "Database", name: "Firebase" },
-  //   { id: 14, domain: "Other", name: "Next.js" },
-  //   { id: 15, domain: "Other", name: "Laravel" },
-  //   { id: 16, domain: "Other", name: "Deno" },
-  //   { id: 17, domain: "Other", name: "Gatsby.js" },
-  //   { id: 18, domain: "Other", name: "Nuxt.js" },
-  //   { id: 19, domain: "Other", name: "Gulp.js" },
-  //   { id: 20, domain: "Other", name: "NPM" },
-  //   { id: 21, domain: "Other", name: "Yarn" },
-  //   { id: 22, domain: "Other", name: "NPM" },
-  //   { id: 23, domain: "Other", name: "Yarn" },
-  //   { id: 24, domain: "Other", name: "NPM" },
-  //   { id: 25, domain: "Other", name: "Yarn" },
-  //   { id: 26, domain: "Other", name: "NPM" },
-  //   { id: 27, domain: "Other", name: "Yarn" },
-  //   { id: 28, domain: "Other", name: "NPM" },
-  //   { id: 29, domain: "Other", name: "Yarn" },
-  //   { id: 30, domain: "Other", name: "NPM" },
-  //   { id: 31, domain: "Other", name: "Yarn" },
-  //   { id: 32, domain: "Backend", name: "NPM" },
-
-  //   // Add more technologies in different domains as needed
-  // ];
-
-  // Sample list of projects
   const projects = [
     { id: 1, name: "Project 1" },
     { id: 2, name: "Project 2" },
@@ -252,7 +143,11 @@ const ProfileInfo = ({ UserProfileData }) => {
                 placeholder="Linked In"
               />
             ) : (
-              <h1 className="ml-2">{ProfileData != undefined ? ProfileData.linkedin : "LinkedIn.com"}</h1>
+              <h1 className="ml-2">
+                {ProfileData != undefined
+                  ? ProfileData.linkedin
+                  : "LinkedIn.com"}
+              </h1>
             )}
           </div>
           <div className="flex flex-row items-center m-2">
@@ -271,7 +166,9 @@ const ProfileInfo = ({ UserProfileData }) => {
               />
             ) : (
               <h1 className="ml-2">
-                {ProfileData != undefined ? ProfileData.websiteUrl : "github.com"}
+                {ProfileData != undefined
+                  ? ProfileData.websiteUrl
+                  : "github.com"}
               </h1>
             )}
 

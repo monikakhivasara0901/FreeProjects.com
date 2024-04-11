@@ -21,21 +21,16 @@ const Page: NextPage<Props> = ({}) => {
   const [SavedProjects, setSavedProjects] = useState([]);
   const [UploadedProjects, setUploadedProjects] = useState([]);
   const [showProjectDetails, setShowProjectDetails] = useState(false);
-  const [showProjectDetailsData, setShowProjectDetailsData] = useState()
+  const [showProjectDetailsData, setShowProjectDetailsData] = useState();
 
-console.log(UserData, "UserData")
-console.log(UserProfileData,"UserProfileData");
- 
-
-
-  
+  // console.log("====================",UserData,"====================");
 
   // request the userprojectinfo route to fetch data
   useEffect(() => {
     fetch("/api/userprojectinfo")
       .then((res) => res.json())
       .then((data) => {
-        let currentData =data.data;
+        let currentData = data.data;
         setUserData(currentData.UserData);
         setUserProfileData(currentData.UserProfileData);
         setSavedProjects(currentData.SavedProjects);
@@ -47,7 +42,7 @@ console.log(UserProfileData,"UserProfileData");
     fetch("/api/userprojectinfo")
       .then((res) => res.json())
       .then((data) => {
-        let currentData =data.data;
+        let currentData = data.data;
         setUserData(currentData.UserData);
         setUserProfileData(currentData.UserProfileData);
         setSavedProjects(currentData.SavedProjects);
@@ -55,12 +50,9 @@ console.log(UserProfileData,"UserProfileData");
       });
   };
 
-
-  const handleShowProject = (projectDetails:any) => {
+  const handleShowProject = (projectDetails: any) => {
     setShowProjectDetailsData(projectDetails);
     setShowProjectDetails(true);
-    console.log(projectDetails);
-    console.log("clicked");
   };
 
   return (
@@ -98,8 +90,14 @@ console.log(UserProfileData,"UserProfileData");
               />
             </button>
           </div>
-          <h1 className="mt-1 text-xl text-center font-bold">{UserProfileData != undefined ? UserProfileData.fullName : "FullName"}</h1>
-          <h2 className="mt-1 text-base text-center font-bold">{UserData != undefined ? UserData.username : "Username"}</h2>
+          <h1 className="mt-1 text-xl text-center font-bold">
+            {UserProfileData != undefined
+              ? UserProfileData.fullName
+              : "FullName"}
+          </h1>
+          <h2 className="mt-1 text-base text-center font-bold">
+            {UserData != undefined ? UserData.username : "Username"}
+          </h2>
           <h3 className="mt-1 text-sm text-center font-bold">
             {UserData != undefined ? UserData.email : "Email"}
           </h3>
@@ -108,7 +106,10 @@ console.log(UserProfileData,"UserProfileData");
       </div>
 
       {showProjectDetails ? (
-        <ProjectDescriptionBox setShowProjectDetails={setShowProjectDetails} showProjectDetailsData={showProjectDetailsData} />
+        <ProjectDescriptionBox
+          setShowProjectDetails={setShowProjectDetails}
+          showProjectDetailsData={showProjectDetailsData}
+        />
       ) : (
         <div className="flex flex-1 flex-col w-[75%] bg-slate-700">
           <div className="flex w-[100%] justify-between bg-slate-800">
@@ -164,7 +165,7 @@ console.log(UserProfileData,"UserProfileData");
             )}
             {ShowWindow == 1 && (
               <>
-                  {UploadedProjects.map((project: any) => (
+                {UploadedProjects.map((project: any) => (
                   <ProjectDetailCard
                     key={project._id}
                     project={project}
@@ -186,7 +187,10 @@ console.log(UserProfileData,"UserProfileData");
             )}
             {ShowWindow == 3 && (
               <>
-                <ProjectUploadForm setShowWindow={setShowWindow} onRefresh={onRefresh} />
+                <ProjectUploadForm
+                  setShowWindow={setShowWindow}
+                  onRefresh={onRefresh}
+                />
               </>
             )}
           </div>

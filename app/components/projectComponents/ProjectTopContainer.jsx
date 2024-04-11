@@ -20,8 +20,14 @@ const ProjectTopContainer = ({}) => {
           ))}
         </div>
         <div className="flex items-center w-[30%] justify-center pl-2">
-           <input type="text" className="w-[80%] h-8 rounded-md text-gray-400 p-1 bg-gray-200" placeholder="Search Here..."/>
-            <button className="ml-2 w-[18%] h-8  border-2  border-white rounded-xl">Search</button>
+          <input
+            type="text"
+            className="w-[80%] h-8 rounded-md text-gray-400 p-1 bg-gray-200"
+            placeholder="Search Here..."
+          />
+          <button className="ml-2 w-[18%] h-8  border-2  border-white rounded-xl">
+            Search
+          </button>
         </div>
       </div>
     </div>

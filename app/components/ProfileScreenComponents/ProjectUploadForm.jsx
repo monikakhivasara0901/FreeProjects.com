@@ -20,7 +20,6 @@ function convertToBase64(file) {
 
 const ProjectUploadForm = ({ setShowWindow, onRefresh }) => {
   const [selectedTechnologies, setSelectedTechnologies] = useState([]);
-  console.log(selectedTechnologies);
   const [formData, setFormData] = useState({
     projectName: "ABC",
     teamLeaderName: "John Doe",
@@ -133,7 +132,6 @@ const ProjectUploadForm = ({ setShowWindow, onRefresh }) => {
     e.preventDefault();
     try {
       const response = await axios.post("/api/uploadProject", formData);
-      console.log("response", response.data.message);
       if (response.data.success) {
         onRefresh();
         setShowWindow(1);
@@ -142,7 +140,6 @@ const ProjectUploadForm = ({ setShowWindow, onRefresh }) => {
       console.error("Error submitting project:", error);
     }
   };
-
 
   return (
     <div className="container mx-auto bg-slate-700 p-8 rounded-lg shadow-md">

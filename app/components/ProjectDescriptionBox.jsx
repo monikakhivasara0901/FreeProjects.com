@@ -12,13 +12,12 @@ import linkedin from "@/public/icons/linkedin.png";
 import gobackarrow from "@/public/icons/go-back-arrow.png";
 import StarRatingComponent from "react-star-rating-component";
 
-
-
-const ProjectDescriptionBox = ({ setShowProjectDetails, showProjectDetailsData }) => {
+const ProjectDescriptionBox = ({
+  setShowProjectDetails,
+  showProjectDetailsData,
+}) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [liked, setLiked] = useState(false);
-
-  console.log(showProjectDetailsData, "showProjectDetailsData");
 
   const images = [
     { src: Image1, alt: "Image1", color: "bg-orange-500" },
@@ -75,7 +74,13 @@ const ProjectDescriptionBox = ({ setShowProjectDetails, showProjectDetailsData }
   return (
     <div className="flex flex-col items-center p-2 bg-gray-800 justify-between w-[98%] h-[100vh] overflow-y-scroll scrollbar-hide">
       <div className="flex flex-none h-[500px] w-[100%] ml-1 items-center relative">
-      <Image src={gobackarrow} style={{ filter: "invert(100%)" }} alt="" onClick={()=>setShowProjectDetails(false)} className="absolute top-5 rounded-full left-5 w-[30px] h-[30px]" />
+        <Image
+          src={gobackarrow}
+          style={{ filter: "invert(50%)" }}
+          alt=""
+          onClick={() => setShowProjectDetails(false)}
+          className="absolute top-5 rounded-full left-5 w-[30px] h-[30px]"
+        />
         <div className="flex-1 h-[100%] overflow-auto scrollbar-hide">
           {showProjectDetailsData.images.map((image, index) => (
             <Image
@@ -92,14 +97,14 @@ const ProjectDescriptionBox = ({ setShowProjectDetails, showProjectDetailsData }
           ))}
           <button
             className="absolute top-1/2 transform -translate-y-1/2 left-1"
-            style={{ filter: "invert(100%)" }}
+            style={{ filter: "invert(50%)" }}
             onClick={showPrevImage}
           >
             <Image src={leftArrow} alt="" className="w-[20px] h-[25px]" />
           </button>
           <button
             className="absolute top-1/2 transform -translate-y-1/2 right-1"
-            style={{ filter: "invert(100%)" }}
+            style={{ filter: "invert(50%)" }}
             onClick={showNextImage}
           >
             <Image src={rightArrow} alt="" className="w-[20px] h-[25px]" />
@@ -109,8 +114,12 @@ const ProjectDescriptionBox = ({ setShowProjectDetails, showProjectDetailsData }
 
       <div className="flex flex-row w-[100%]">
         <div className="flex-1 p-2 h-[100%] w-[75%] mx-1 items-center justify-around">
-          <h1 className="font-bold text-xl m-1">{showProjectDetailsData.projectName}</h1>
-          <h1 className="font-bold text-sm m-1">{showProjectDetailsData.universityOrCollegeName}</h1>
+          <h1 className="font-bold text-xl m-1">
+            {showProjectDetailsData.projectName}
+          </h1>
+          <h1 className="font-bold text-sm m-1">
+            {showProjectDetailsData.universityOrCollegeName}
+          </h1>
           <p className="text-wrap text-sm m-1 mb-2 h-[40%]">
             {showProjectDetailsData.description}
           </p>
@@ -175,9 +184,11 @@ const ProjectDescriptionBox = ({ setShowProjectDetails, showProjectDetailsData }
             <button className="w-[100%] h-8 m-1  border-2  border-white rounded-xl">
               Explore Details
             </button>
-            {showProjectDetailsData.status === "Live" && <button className="w-[100%] h-8 m-1 border-2  border-white rounded-xl">
-              Live Project
-            </button>}
+            {showProjectDetailsData.status === "Live" && (
+              <button className="w-[100%] h-8 m-1 border-2  border-white rounded-xl">
+                Live Project
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -187,7 +198,8 @@ const ProjectDescriptionBox = ({ setShowProjectDetails, showProjectDetailsData }
           Team Leader Name : {showProjectDetailsData.teamLeaderName}
         </h1>
         <h1 className="font-bold text-xl">
-          University or College Name : {showProjectDetailsData.universityOrCollegeName}
+          University or College Name :{" "}
+          {showProjectDetailsData.universityOrCollegeName}
         </h1>
         <h1 className="font-bold text-lg">
           Number of Team Members : {showProjectDetailsData.numberOfTeamMembers}
@@ -199,7 +211,9 @@ const ProjectDescriptionBox = ({ setShowProjectDetails, showProjectDetailsData }
               key={index}
               className="flex flex-row justify-start items-start ml-4 w-[100%]"
             >
-              <div className="w-1/3 m-1">{index+1}. {member.name}</div>
+              <div className="w-1/3 m-1">
+                {index + 1}. {member.name}
+              </div>
               <div className="w-1/3 m-1">Email: {member.email}</div>
               <div className="w-1/3 m-1">
                 LinkedIn: {member.socialMedia.linkedIn}

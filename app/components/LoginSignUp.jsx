@@ -13,10 +13,7 @@ const LoginSignUp = ({ type, setLoginSignup }) => {
   const handleLoginSignUpSubmit = (event) => {
     event.preventDefault();
     if (signup) {
-      console.log("signup");
       if (password == conformpassword && password.length > 3) {
-
-        console.log("password match");
         fetch("http://localhost:3000/api/signup/", {
           method: "POST",
           headers: {
@@ -30,12 +27,12 @@ const LoginSignUp = ({ type, setLoginSignup }) => {
           }),
         })
           .then(async (response) => {
-            const data= await response.json();
-            console.log("response", data);
+            const data = await response.json();
+
             if (data.success) {
               setLoginSignup(false);
-            }else{
-              alert(data.message)
+            } else {
+              alert(data.message);
             }
           })
           .catch((error) => {
@@ -45,24 +42,23 @@ const LoginSignUp = ({ type, setLoginSignup }) => {
         alert("password not match or less than 3 characters");
       }
     } else {
-      console.log("login");
-      fetch("http://localhost:3000/api/login/", {
+      fetch("/api/login/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          username: username,
+          email: email,
           password: password,
         }),
       })
         .then(async (response) => {
-          const data= await response.json();
-          console.log("responce", data);
+          const data = await response.json();
+
           if (data.success) {
             setLoginSignup(false);
-          }else{
-            alert(data.message)
+          } else {
+            alert(data.message);
           }
         })
         .catch((error) => {
@@ -78,9 +74,7 @@ const LoginSignUp = ({ type, setLoginSignup }) => {
 
   return (
     <div className="flex absolute justify-center items-center w-[100vw] h-[100vh] bg-transparent backdrop-filter backdrop-blur-[5px]">
-      <div
-        className="flex items-center justify-center absolute left-[40%]"
-      >
+      <div className="flex items-center justify-center absolute left-[40%]">
         <button
           onClick={() => setLoginSignup(false)}
           className="absolute top-2 right-2 text-2xl cursor-pointer"
@@ -111,32 +105,34 @@ const LoginSignUp = ({ type, setLoginSignup }) => {
                 />
               </div>
             )}
+
+            <div>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-4 py-3 text-black border-2 border-gray-350 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
+            </div>
+
             {signup && (
               <div>
                 <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  placeholder="Email"
+                  type="text"
+                  id="username"
+                  name="username"
+                  placeholder="Username"
                   required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                   className="w-full px-4 py-3 text-black border-2 border-gray-350 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                 />
               </div>
             )}
-            <div>
-              <input
-                type="text"
-                id="username"
-                name="username"
-                placeholder="Username"
-                required
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className="w-full px-4 py-3 text-black border-2 border-gray-350 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-              />
-            </div>
             <div>
               <input
                 type="password"
