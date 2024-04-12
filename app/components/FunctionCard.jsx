@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import img2 from "@/public/images/img2.jpeg";
+import img2 from "@/public/images/pro3.jpg";
 import { useRouter } from "next/navigation";
 const FunctionCard = ({}) => {
   const router = useRouter();
@@ -32,11 +32,12 @@ const FunctionCard = ({}) => {
       </div>
 
       <div className="flex w-[60%] justify-center items-center">
-        <div className="border-2 border-white h-[60%] w-[80%]">
+        <div className="border-2 border-white h-[80%] w-[80%]">
           <Image
-            className={`flex-none w-[100%] h-[100%] `}
             src={img2}
             alt={"not loaded properly"}
+            width={500}
+            height={500}
           />
         </div>
       </div>
