@@ -22,6 +22,8 @@ const NavBar = () => {
   const handleProfileClick = () => {
     router.push("/profile");
   };
+
+  
   return (
     <div>
       {loginSignUp && (

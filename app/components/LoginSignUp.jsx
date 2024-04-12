@@ -3,6 +3,8 @@ import Image from "next/image";
 import { useState } from "react";
 
 const LoginSignUp = ({ type, setLoginSignup }) => {
+
+  
   const [signup, setSignup] = useState(type);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -12,6 +14,8 @@ const LoginSignUp = ({ type, setLoginSignup }) => {
 
   const handleLoginSignUpSubmit = (event) => {
     event.preventDefault();
+
+
     if (signup) {
       if (password == conformpassword && password.length > 3) {
         fetch("/api/signup/", {
@@ -31,6 +35,7 @@ const LoginSignUp = ({ type, setLoginSignup }) => {
 
             if (data.success) {
               setLoginSignup(false);
+              alert(data.message);
             } else {
               alert(data.message);
             }

@@ -53,26 +53,20 @@ const ProjectUploadForm = ({ setShowWindow, onRefresh }) => {
     gitHubLink: "https://github.com/Radhey-R-Kedar/FreeProjects.com.git",
   });
 
-  useEffect(() => {
-    setFormData((prevData) => ({
-      ...prevData,
-      stackUsed: [...selectedTechnologies],
-    }));
-  }, [selectedTechnologies]);
 
   const handleCheckboxChange = (technology) => {
-    setSelectedTechnologies((prevSelectedTechnologies) => {
-      const isSelected = prevSelectedTechnologies.some(
-        (t) => t.name === technology.name
+    const isSelected = selectedTechnologies.some((t) => t.id === technology.id);
+    if (isSelected) {
+      setSelectedTechnologies(
+        selectedTechnologies.filter((t) => t.id !== technology.id)
       );
-      if (isSelected) {
-        return prevSelectedTechnologies.filter(
-          (t) => t.name !== technology.name
-        );
-      } else {
-        return [...prevSelectedTechnologies, technology.name];
-      }
-    });
+    } else {
+      setSelectedTechnologies([...selectedTechnologies, technology]);
+      setFormData((prevData) => ({
+        ...prevData,
+        stackUsed: selectedTechnologies.map((technology) => technology.name),
+      }));
+    }
   };
 
   const handleChange = (e) => {
@@ -316,6 +310,7 @@ const ProjectUploadForm = ({ setShowWindow, onRefresh }) => {
             id="images"
             name="images"
             accept="image/*"
+            required
             multiple
             onChange={handleFileUpload}
             className="input-field w-96 h-8 text-white rounded-sm pl-2"
@@ -420,7 +415,8 @@ const ProjectUploadForm = ({ setShowWindow, onRefresh }) => {
           ))}
         </div>
 
-        <div className="flex flex-col justify-center border-2 border-slate-500  rounded-md mt-3">
+        <div className="flex flex-col justify-center border-2 border-slate-500 m-3 rounded-md ">
+       
           <div className="flex flex-col border-b-2 border-slate-500 p-2">
             <h2 className="text-lg font-bold mb-2">All Technologies</h2>
             <div className="flex overflow-auto scrollbar-hide">
@@ -456,25 +452,27 @@ const ProjectUploadForm = ({ setShowWindow, onRefresh }) => {
               ))}
             </div>
           </div>
-
-          <div className="flex flex-col ml-4 pt-2 pb-2 pl-0">
-            <h2 className="text-lg font-bold">Technologies:</h2>
-            <div className="flex flex-wrap">
-              {selectedTechnologies.map((technology) => (
-                <div key={technology.id} className="flex items-center w-28">
-                  <input
-                    type="checkbox"
-                    id={`selected-${technology}`}
-                    checked
-                    readOnly
-                    className="mr-2"
-                  />
-                  <label htmlFor={`selected-${technology}`}>{technology}</label>
-                </div>
-              ))}
-            </div>
+        
+        <div className="flex flex-col ml-4 pt-2 pb-2 pl-0">
+          <h2 className="text-lg font-bold">Technologies:</h2>
+          <div className="flex flex-wrap">
+            {selectedTechnologies.map((technology) => (
+              <div key={technology.id} className="flex items-center w-28">
+                <input
+                  type="checkbox"
+                  id={`selected-${technology.name}`}
+                  checked
+                  readOnly
+                  className="mr-2"
+                />
+                <label htmlFor={`selected-${technology.name}`}>
+                  {technology.name}
+                </label>
+              </div>
+            ))}
           </div>
         </div>
+      </div>
 
         <div className="col-span-2 mt-3">
           <button

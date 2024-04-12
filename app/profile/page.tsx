@@ -64,8 +64,10 @@ const Page: NextPage<Props> = ({}) => {
       <div className="flex flex-none w-[25%]  p-2 bg-blue-950 flex-col justify-between items-center">
         <div className="flex flex-col justify-center items-center">
           <Image
-            src={profilepic}
+            src={UserProfileData != undefined? UserProfileData.avatarUrl:profilepic}
             alt="profile"
+            width={100}
+            height={100}
             className="h-48 w-48 rounded-full border-2 border-white m-2"
           />
           <div className="flex flex-row justify-between items-center m-1 w-[50%]">
@@ -92,7 +94,7 @@ const Page: NextPage<Props> = ({}) => {
                 style={{ filter: "invert(100%)" }}
               />
             </button>
-            <button className="h-5 w-5 m-1" onClick={() => redirectTo((UserProfileData!=undefined?UserProfileData.github:""))}>
+            <button className="h-5 w-5 m-1" onClick={() => redirectTo((UserProfileData!=undefined?UserProfileData.gitHub:""))}>
               <Image
                 src={github}
                 alt="github"
@@ -177,7 +179,7 @@ const Page: NextPage<Props> = ({}) => {
           </div>
           <div className="w-[100%] h-[100%] overflow-scroll scrollbar-hide">
             {ShowWindow == 0 && (
-              <ProfileInfo UserProfileData={UserProfileData} />
+              <ProfileInfo onRefresh={onRefresh} UserProfileData={UserProfileData} UploadedProjects={UploadedProjects} handleShowProject={handleShowProject}  />
             )}
             {ShowWindow == 1 && (
               <>
