@@ -11,12 +11,12 @@ const mongoose = require('mongoose');
 export async function GET(request: NextRequest) {
     await connect();
     try {
-        console.log("called");
-        const id = "6609604c0dd8b060c4041523";
-        const userId = new mongoose.Types.ObjectId(id);
-        console.log(userId);
+
+        const userId = await getDataFromToken(request);
+        
         
         const UserData = await User.findOne({ _id: userId });
+        
         const UserProfileData = await UserProfile.findOne({ _id: UserData.userProfile });
         
         let SavedProjects = [];

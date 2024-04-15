@@ -9,10 +9,10 @@ const savedProjectSchema = new mongoose.Schema({
 });
 
 // Schema for GitHub likes
-const gitHubLikeSchema = new mongoose.Schema({
-    repositoryName: String,
-    repositoryUrl: String
-});
+// const gitHubLikeSchema = new mongoose.Schema({
+//     repositoryName: String,
+//     repositoryUrl: String
+// });
 
 // Schema for social media profiles
 const socialMediaSchema = new mongoose.Schema({
@@ -21,13 +21,13 @@ const socialMediaSchema = new mongoose.Schema({
 });
 
 // Schema for skills
-const skillSchema = new mongoose.Schema({
-    name: String,
-    proficiency: {
-        type: String,
-        enum: ['Beginner', 'Intermediate', 'Advanced']
-    }
-});
+// const skillSchema = new mongoose.Schema({
+//     name: String,
+//     proficiency: {
+//         type: String,
+//         enum: ['Beginner', 'Intermediate', 'Advanced']
+//     }
+// });
 
 // Schema for uploaded projects
 const uploadedProjectSchema = new mongoose.Schema({
@@ -57,9 +57,9 @@ const userProfileSchema = new mongoose.Schema({
     websiteUrl: String,
     location: String,
     savedProjects: [savedProjectSchema], // Array of saved projects
-    gitHubLikes: [gitHubLikeSchema], // Array of GitHub likes
+    gitHub: String, // Array of GitHub likes
     socialMedia: [socialMediaSchema], // Array of social media profiles
-    skills: [skillSchema], // Array of skills
+    skills: [], // Array of skills
     uploadedProjects: [uploadedProjectSchema], // Array of uploaded projects
     createdAt: {
         type: Date,

@@ -21,21 +21,16 @@ const Page: NextPage<Props> = ({}) => {
   const [SavedProjects, setSavedProjects] = useState([]);
   const [UploadedProjects, setUploadedProjects] = useState([]);
   const [showProjectDetails, setShowProjectDetails] = useState(false);
-  const [showProjectDetailsData, setShowProjectDetailsData] = useState()
+  const [showProjectDetailsData, setShowProjectDetailsData] = useState();
 
-console.log(UserData, "UserData")
-console.log(UserProfileData,"UserProfileData");
- 
-
-
-  
+  // console.log("====================",UserData,"====================");
 
   // request the userprojectinfo route to fetch data
   useEffect(() => {
     fetch("/api/userprojectinfo")
       .then((res) => res.json())
       .then((data) => {
-        let currentData =data.data;
+        let currentData = data.data;
         setUserData(currentData.UserData);
         setUserProfileData(currentData.UserProfileData);
         setSavedProjects(currentData.SavedProjects);
@@ -43,12 +38,25 @@ console.log(UserProfileData,"UserProfileData");
       });
   }, []);
 
+  const onRefresh = () => {
+    fetch("/api/userprojectinfo")
+      .then((res) => res.json())
+      .then((data) => {
+        let currentData = data.data;
+        setUserData(currentData.UserData);
+        setUserProfileData(currentData.UserProfileData);
+        setSavedProjects(currentData.SavedProjects);
+        setUploadedProjects(currentData.UploadedProjects);
+      });
+  };
 
-  const handleShowProject = (projectDetails:any) => {
+  const handleShowProject = (projectDetails: any) => {
     setShowProjectDetailsData(projectDetails);
     setShowProjectDetails(true);
-    console.log(projectDetails);
-    console.log("clicked");
+  };
+
+  const redirectTo = (link) => {
+    window.open(link);
   };
 
   return (
@@ -56,12 +64,14 @@ console.log(UserProfileData,"UserProfileData");
       <div className="flex flex-none w-[25%]  p-2 bg-blue-950 flex-col justify-between items-center">
         <div className="flex flex-col justify-center items-center">
           <Image
-            src={profilepic}
+            src={UserProfileData != undefined? UserProfileData.avatarUrl:profilepic}
             alt="profile"
+            width={100}
+            height={100}
             className="h-48 w-48 rounded-full border-2 border-white m-2"
           />
           <div className="flex flex-row justify-between items-center m-1 w-[50%]">
-            <button className="h-5 w-5 m-1">
+            <button className="h-5 w-5 m-1" onClick={() => redirectTo((UserProfileData!=undefined?UserProfileData.websiteUrl:""))}>
               <Image
                 src={link}
                 alt="Personal Website"
@@ -69,7 +79,14 @@ console.log(UserProfileData,"UserProfileData");
                 style={{ filter: "invert(100%)" }}
               />
             </button>
-            <button className="h-5 w-5 m-1">
+            <button
+              onClick={() =>
+                redirectTo(
+                  UserProfileData != undefined ? UserProfileData.linkedIn : ""
+                )
+              }
+              className="h-5 w-5 m-1"
+            >
               <Image
                 src={linkedin}
                 alt="linkedin"
@@ -77,7 +94,7 @@ console.log(UserProfileData,"UserProfileData");
                 style={{ filter: "invert(100%)" }}
               />
             </button>
-            <button className="h-5 w-5 m-1">
+            <button className="h-5 w-5 m-1" onClick={() => redirectTo((UserProfileData!=undefined?UserProfileData.gitHub:""))}>
               <Image
                 src={github}
                 alt="github"
@@ -86,17 +103,31 @@ console.log(UserProfileData,"UserProfileData");
               />
             </button>
           </div>
-          <h1 className="mt-1 text-xl text-center font-bold">{UserProfileData != undefined ? UserProfileData.fullName : "FullName"}</h1>
-          <h2 className="mt-1 text-base text-center font-bold">{UserData != undefined ? UserData.username : "Username"}</h2>
+          <h1 className="mt-1 text-xl text-center font-bold">
+            {UserProfileData != undefined
+              ? UserProfileData.fullName
+              : "FullName"}
+          </h1>
+          <h2 className="mt-1 text-base text-center font-bold">
+            {UserData != undefined ? UserData.username : "Username"}
+          </h2>
           <h3 className="mt-1 text-sm text-center font-bold">
             {UserData != undefined ? UserData.email : "Email"}
           </h3>
         </div>
-        <h1>Created At</h1>
+        <h1>
+          Created At:{" "}
+          {UserProfileData != undefined
+            ? UserProfileData.createdAt.slice(0, 10)
+            : ""}
+        </h1>
       </div>
 
       {showProjectDetails ? (
-        <ProjectDescriptionBox setShowProjectDetails={setShowProjectDetails} showProjectDetailsData={showProjectDetailsData} />
+        <ProjectDescriptionBox
+          setShowProjectDetails={setShowProjectDetails}
+          showProjectDetailsData={showProjectDetailsData}
+        />
       ) : (
         <div className="flex flex-1 flex-col w-[75%] bg-slate-700">
           <div className="flex w-[100%] justify-between bg-slate-800">
@@ -124,7 +155,7 @@ console.log(UserProfileData,"UserProfileData");
               }`}
             >
               <h1 className="text-center w-[100%]">My Projects</h1>
-              <h1 className="justify-center text-center w-[10%]">1</h1>
+              <h1 className="justify-center text-center w-[10%]">{UploadedProjects!=undefined? UploadedProjects.length:0}</h1>
             </button>
             <button
               onClick={() => setShowWindow(2)}
@@ -135,7 +166,7 @@ console.log(UserProfileData,"UserProfileData");
               }`}
             >
               <h1 className="text-center w-[100%]">Saved Projects</h1>
-              <h1 className="justify-center text-center w-[10%]">2</h1>
+              <h1 className="justify-center text-center w-[10%]">{SavedProjects!=undefined? SavedProjects.length:0}</h1>
             </button>
             <button
               onClick={() => setShowWindow(3)}
@@ -148,11 +179,11 @@ console.log(UserProfileData,"UserProfileData");
           </div>
           <div className="w-[100%] h-[100%] overflow-scroll scrollbar-hide">
             {ShowWindow == 0 && (
-              <ProfileInfo UserProfileData={UserProfileData} />
+              <ProfileInfo onRefresh={onRefresh} UserProfileData={UserProfileData} UploadedProjects={UploadedProjects} handleShowProject={handleShowProject}  />
             )}
             {ShowWindow == 1 && (
               <>
-                  {UploadedProjects.map((project: any) => (
+                {UploadedProjects.map((project: any) => (
                   <ProjectDetailCard
                     key={project._id}
                     project={project}
@@ -174,7 +205,10 @@ console.log(UserProfileData,"UserProfileData");
             )}
             {ShowWindow == 3 && (
               <>
-                <ProjectUploadForm setShowWindow={setShowWindow} />
+                <ProjectUploadForm
+                  setShowWindow={setShowWindow}
+                  onRefresh={onRefresh}
+                />
               </>
             )}
           </div>

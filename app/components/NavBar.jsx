@@ -20,25 +20,29 @@ const NavBar = () => {
   };
 
   const handleProfileClick = () => {
-    router.push("/profile"); 
+    router.push("/profile");
   };
+
+  
   return (
     <div>
       {loginSignUp && (
         <LoginSignUp type={type} setLoginSignup={setLoginSignup} />
       )}
-      <nav className="p-3 bg-gradient-to-r from-[#f1f2b5] to-[#135058]">
+      <nav className="p-3 bg-gradient-to-r from-[#0F3443] to-[#0F3443]">
         <div className=" flex flex-row justify-between items-center">
           <div>
-            <h1 className="m-2 text-3xl font-bold text-black">FreeProjects.com</h1>
+            <h1 className="m-2 text-3xl font-bold text-White">
+              FreeProjects.com
+            </h1>
             <div className="flex-row">
-              <a className="m-2 text-black" href="/">
+              <a className="m-2 text-white" href="/">
                 Home
               </a>
-              <a className="m-2 text-black" href="/projects">
+              <a className="m-2 text-white" href="/projects">
                 Projects
               </a>
-              <a className="m-2 text-black" href="#">
+              <a className="m-2 text-white" href="#">
                 About us
               </a>
             </div>
@@ -58,8 +62,17 @@ const NavBar = () => {
               Sign up
             </button>
             <Link href="/profile">
-              <div className="border-2 border-[#98a8ab] border-spacing-7 rounded-full m-2" onClick={handleProfileClick}>
-                <Image src={profilepic} alt="profile" width={60} height={60}  className="rounded-full"/>
+              <div
+                className="border-2 border-[#98a8ab] border-spacing-7 rounded-full m-2"
+                onClick={handleProfileClick}
+              >
+                <Image
+                  src={profilepic}
+                  alt="profile"
+                  width={60}
+                  height={60}
+                  className="rounded-full"
+                />
               </div>
             </Link>
           </div>

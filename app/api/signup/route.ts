@@ -38,10 +38,7 @@ interface SocialMedia {
   url: string;
 }
 
-interface Skill {
-  name: string;
-  proficiency: "Beginner" | "Intermediate" | "Advanced";
-}
+
 
 interface UploadedProject {
   projectId: mongoose.Types.ObjectId;
@@ -58,9 +55,7 @@ interface UserProfileDocument extends Document {
   websiteUrl?: string;
   location?: string;
   savedProjects: SavedProject[];
-  gitHubLikes: GitHubLike[];
-  socialMedia: SocialMedia[];
-  skills: Skill[];
+  skills: [];
   uploadedProjects: UploadedProject[];
   createdAt: Date;
 }
@@ -94,8 +89,7 @@ export async function POST(request: NextRequest) {
       websiteUrl: "",
       location: "",
       savedProjects: [],
-      gitHubLikes: [],
-      socialMedia: [],
+      gitHub: "",
       skills: [],
       uploadedProjects: [],
     });

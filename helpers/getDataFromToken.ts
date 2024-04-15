@@ -8,13 +8,11 @@ export const getDataFromToken = async (request: NextRequest) => {
         if (!token) {
             throw new Error("Token not provided");
         }
-        console.log("token",token);
         
         const jwtSecret = "mysecret";
         const decodedToken: any = jwt.verify(token, jwtSecret);
-        console.log(decodedToken);
         
-        return "ahjkfsdjk";
+        return decodedToken.id;
     } catch (error: any) {
         throw new Error(error.message);
     }
